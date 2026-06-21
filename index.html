@@ -804,118 +804,47 @@
                     <div class="filter-bar">
                         <div class="filter-item">
                             <label>权益状态：</label>
-                            <select class="form-select" style="width: 140px;">
+                            <select class="form-select" style="width: 140px;" id="benefitListStatus" onchange="renderBenefitList()">
                                 <option value="">全部</option>
-                                <option value="active">进行中</option>
-                                <option value="draft">草稿</option>
+                                <option value="running">进行中</option>
                                 <option value="ended">已结束</option>
                             </select>
                         </div>
                         <div class="filter-item">
                             <label>会员分层：</label>
-                            <select class="form-select" style="width: 140px;">
+                            <select class="form-select" style="width: 140px;" id="benefitListTag" onchange="renderBenefitList()">
                                 <option value="">全部分层</option>
-                                <option>慢病会员</option>
-                                <option>家庭常备药</option>
-                                <option>银发关怀</option>
+                                <option value="慢病会员">慢病会员</option>
+                                <option value="家庭常备药">家庭常备药</option>
+                                <option value="银发关怀">银发关怀</option>
+                                <option value="孕产妈妈">孕产妈妈</option>
                             </select>
                         </div>
                         <div class="filter-item">
-                            <input type="text" class="form-input" style="width: 200px;" placeholder="搜索权益名称...">
+                            <input type="text" class="form-input" style="width: 200px;" placeholder="搜索权益名称..." id="benefitListSearch" onkeyup="renderBenefitList()">
                         </div>
                         <button class="btn btn-primary" style="margin-left: auto;" onclick="switchTab('benefit', 'create')">
                             <i class="ri-add-line"></i>新建权益
                         </button>
                     </div>
 
-                    <table class="table">
+                    <table class="table" id="benefitListTable">
                         <thead>
                             <tr>
+                                <th>状态</th>
                                 <th>权益名称</th>
                                 <th>会员分层</th>
-                                <th>权益类型</th>
-                                <th>面额</th>
+                                <th>门店数</th>
                                 <th>生效时间</th>
-                                <th>适用门店</th>
-                                <th>状态</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td style="font-weight: 500;">慢病用药个账支付专属权益</td>
-                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">慢病会员</span></td>
-                                <td>立减券</td>
-                                <td style="color: #ef4444; font-weight: 500;">¥20</td>
-                                <td>2026.06.01 - 2026.08.31</td>
-                                <td>128家</td>
-                                <td><span class="status-badge active">进行中</span></td>
-                                <td>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">查看</a>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">编辑</a>
-                                    <a style="color: #ef4444; cursor: pointer;">下架</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 500;">银发关怀个账9折优惠</td>
-                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">银发关怀</span></td>
-                                <td>折扣</td>
-                                <td style="color: #ef4444; font-weight: 500;">9折</td>
-                                <td>2026.05.15 - 2026.07.15</td>
-                                <td>86家</td>
-                                <td><span class="status-badge active">进行中</span></td>
-                                <td>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">查看</a>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">编辑</a>
-                                    <a style="color: #ef4444; cursor: pointer;">下架</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 500;">家庭常备药个账立减券</td>
-                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">家庭常备药</span></td>
-                                <td>立减券</td>
-                                <td style="color: #ef4444; font-weight: 500;">¥15</td>
-                                <td>2026.06.10 - 2026.09.10</td>
-                                <td>215家</td>
-                                <td><span class="status-badge active">进行中</span></td>
-                                <td>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">查看</a>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">编辑</a>
-                                    <a style="color: #ef4444; cursor: pointer;">下架</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 500;">孕产妈妈个账多倍积分</td>
-                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">孕产妈妈</span></td>
-                                <td>多倍积分</td>
-                                <td style="color: #ef4444; font-weight: 500;">3倍积分</td>
-                                <td>2026.07.01 - 2026.12.31</td>
-                                <td>0家</td>
-                                <td><span class="status-badge draft">草稿</span></td>
-                                <td>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">编辑</a>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">发布</a>
-                                    <a style="color: #ef4444; cursor: pointer;">删除</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 500;">春节个账支付特惠</td>
-                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">全部分层</span></td>
-                                <td>立减券</td>
-                                <td style="color: #ef4444; font-weight: 500;">¥30</td>
-                                <td>2026.01.15 - 2026.02.28</td>
-                                <td>320家</td>
-                                <td><span class="status-badge ended">已结束</span></td>
-                                <td>
-                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">查看数据</a>
-                                    <a style="color: #0ea5e9; cursor: pointer;">复制</a>
-                                </td>
-                            </tr>
+                        <tbody id="benefitListTbody">
                         </tbody>
                     </table>
 
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-                        <span style="font-size: 13px; color: #6b7280;">共 5 条记录</span>
+                        <span style="font-size: 13px; color: #6b7280;">共 <span id="benefitListCount">0</span> 条记录</span>
                         <div style="display: flex; gap: 6px;">
                             <button class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">上一页</button>
                             <button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">1</button>
@@ -1254,7 +1183,7 @@
                         <button class="btn btn-secondary" onclick="saveStoreDraft()">
                             <i class="ri-save-line"></i>保存设置
                         </button>
-                        <button class="btn btn-success" onclick="publishBenefit()">
+                        <button class="btn btn-success" onclick="showPublishSummary()">
                             <i class="ri-send-plane-line"></i>确认发布
                         </button>
                     </div>
@@ -1765,7 +1694,14 @@
                 excludeDesc: '保健品、医疗器械不参与',
                 staffTip: '您好，老年客户医保个账支付可享9折优惠哦',
                 complianceChecks: complianceData['all'],
-                status: 'running'
+                status: 'running',
+                operationLogs: [
+                    { time: '2026-06-08 14:20', operator: '运营部-王主管', action: '创建权益', detail: '完成银发关怀权益基本信息填写' },
+                    { time: '2026-06-09 10:15', operator: '运营部-王主管', action: '合规检查', detail: '按全部维度完成检查，通过 3 项，待确认 2 项' },
+                    { time: '2026-06-09 16:30', operator: '运营部-王主管', action: '调整门店', detail: '从 10 家调整为 8 家，排除 2 家政策暂不支持门店' },
+                    { time: '2026-06-10 09:30', operator: '运营部-王主管', action: '确认发布', detail: '权益正式发布，同步至 8 家门店和银发会员' }
+                ],
+                publishSummary: null
             },
             {
                 id: 'BATCH-20260520-002',
@@ -1780,7 +1716,14 @@
                 excludeDesc: '处方药、医疗器械不参与',
                 staffTip: '您好，家庭常备药医保个账支付满69减10元哦',
                 complianceChecks: complianceData['city'],
-                status: 'running'
+                status: 'running',
+                operationLogs: [
+                    { time: '2026-05-18 11:00', operator: '运营部-张专员', action: '创建权益', detail: '完成家庭常备药权益基本信息填写' },
+                    { time: '2026-05-19 09:45', operator: '运营部-张专员', action: '合规检查', detail: '按城市维度完成检查，通过 3 项，待确认 2 项' },
+                    { time: '2026-05-19 15:20', operator: '法务部-刘经理', action: '合规复核', detail: '确认商品类目排除说明符合医保规定' },
+                    { time: '2026-05-20 14:15', operator: '运营部-张专员', action: '确认发布', detail: '权益正式发布，同步至 15 家门店' }
+                ],
+                publishSummary: null
             },
             {
                 id: 'BATCH-20260115-003',
@@ -1795,7 +1738,15 @@
                 excludeDesc: '非母婴类商品不参与',
                 staffTip: '您好，孕产妈妈医保个账支付享3倍积分哦',
                 complianceChecks: complianceData['level'],
-                status: 'ended'
+                status: 'ended',
+                operationLogs: [
+                    { time: '2026-01-13 10:30', operator: '运营部-陈专员', action: '创建权益', detail: '完成孕产妈妈权益基本信息填写' },
+                    { time: '2026-01-14 09:00', operator: '运营部-陈专员', action: '合规检查', detail: '按会员等级维度完成检查，通过 4 项，待确认 1 项' },
+                    { time: '2026-01-14 16:00', operator: '运营部-陈专员', action: '调整门店', detail: '从 8 家调整为 6 家，聚焦母婴品类重点门店' },
+                    { time: '2026-01-15 10:00', operator: '运营部-陈专员', action: '确认发布', detail: '权益正式发布，同步至 6 家门店和孕产会员' },
+                    { time: '2026-04-15 23:59', operator: '系统', action: '自动结束', detail: '活动到期，权益自动下架' }
+                ],
+                publishSummary: null
             },
             {
                 id: 'BATCH-20260120-004',
@@ -1810,7 +1761,15 @@
                 excludeDesc: '特价商品、部分处方药不参与',
                 staffTip: '您好，春节活动期间医保个账支付享专属优惠哦',
                 complianceChecks: complianceData['all'],
-                status: 'ended'
+                status: 'ended',
+                operationLogs: [
+                    { time: '2026-01-18 09:00', operator: '运营部-李经理', action: '创建权益', detail: '完成春节特惠权益基本信息填写' },
+                    { time: '2026-01-19 10:00', operator: '运营部-李经理', action: '合规检查', detail: '按全部维度完成检查，通过 4 项，待确认 1 项' },
+                    { time: '2026-01-19 15:00', operator: '总经理-王总', action: '审批通过', detail: '同意春节活动方案' },
+                    { time: '2026-01-20 08:30', operator: '运营部-李经理', action: '确认发布', detail: '权益正式发布，全量推送' },
+                    { time: '2026-02-15 23:59', operator: '系统', action: '自动结束', detail: '活动到期，权益自动下架' }
+                ],
+                publishSummary: null
             },
             {
                 id: 'BATCH-NEW-CHRONIC',
@@ -1825,7 +1784,14 @@
                 excludeDesc: '保健品、医疗器械、消杀类商品不参与',
                 staffTip: '您好，慢病用药医保个账支付立减20元哦',
                 complianceChecks: complianceData['all'],
-                status: 'running'
+                status: 'running',
+                operationLogs: [
+                    { time: '2026-05-30 14:00', operator: '运营部-李经理', action: '创建权益', detail: '完成慢病用药权益基本信息填写' },
+                    { time: '2026-05-31 09:30', operator: '运营部-李经理', action: '合规检查', detail: '按全部维度完成检查，通过 3 项，待确认 2 项' },
+                    { time: '2026-05-31 16:00', operator: '运营部-李经理', action: '调整门店', detail: '从 15 家调整为 12 家，确保全部支持慢病个账支付' },
+                    { time: '2026-06-01 10:00', operator: '运营部-李经理', action: '确认发布', detail: '权益正式发布，同步至 12 家门店和慢病会员' }
+                ],
+                publishSummary: null
             }
         ];
 
@@ -1854,18 +1820,6 @@
             if (page === 'dashboard') {
                 setTimeout(initCharts, 100);
                 setTimeout(updateDashboardMetrics, 150);
-            }
-        }
-
-        function switchTab(page, tab) {
-            const tabContainer = document.getElementById(page + '-' + tab).parentElement;
-            tabContainer.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
-            document.getElementById(page + '-' + tab).style.display = 'block';
-
-            const tabNav = tabContainer.previousElementSibling;
-            if (tabNav && tabNav.classList.contains('tabs')) {
-                tabNav.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-                tabNav.querySelector('.tab-item[data-tab="' + tab + '"]').classList.add('active');
             }
         }
 
@@ -2068,7 +2022,7 @@
             switchPage('store');
         }
 
-        function publishBenefit() {
+        function showPublishSummary() {
             updateBenefitConfigFromForm();
 
             const selectedStores = [];
@@ -2081,9 +2035,111 @@
                 return;
             }
 
-            if (!confirm('确认发布该权益？发布后将同步至所选门店和会员端。')) {
-                return;
-            }
+            const cityFilter = document.getElementById('selectCity').value;
+            const policyFilter = document.getElementById('selectPolicy').value;
+
+            const cityText = cityFilter ? document.getElementById('selectCity').options[document.getElementById('selectCity').selectedIndex].text : '全部城市';
+            const policyText = policyFilter ? document.getElementById('selectPolicy').options[document.getElementById('selectPolicy').selectedIndex].text : '全部政策';
+
+            const dimension = document.getElementById('checkDimension').value;
+            const checks = complianceData[dimension] || complianceData['all'];
+            const passCount = checks.filter(c => c.status === 'pass').length;
+            const warnCount = checks.filter(c => c.status === 'warn').length;
+            const failCount = checks.filter(c => c.status === 'fail').length;
+
+            let risks = [];
+            if (warnCount > 0) risks.push(warnCount + ' 项合规待确认');
+            if (failCount > 0) risks.push(failCount + ' 项合规不通过');
+            const nonSupportStores = Array.from(document.querySelectorAll('#storeList .store-item.selected')).filter(
+                s => s.getAttribute('data-policy') === 'not_support'
+            ).length;
+            if (nonSupportStores > 0) risks.push(nonSupportStores + ' 家门店不支持个账支付');
+            const risksText = risks.length > 0 ? risks.join('，') : '暂无风险';
+
+            const storeText = cityText + ' · ' + policyText + '，共 ' + selectedStores.length + ' 家门店：' +
+                             selectedStores.slice(0, 5).join('、') + (selectedStores.length > 5 ? ' 等' + selectedStores.length + ' 家' : '');
+
+            const copyText = benefitConfig.name + '：' + benefitConfig.payHint +
+                           '（门槛：' + (benefitConfig.threshold || '无门槛') + '，' +
+                           '面额：' + benefitConfig.value + (benefitConfig.unit === 'yuan' ? '元' : benefitConfig.unit === 'percent' ? '%折扣' : '积分') + '）';
+
+            const startDate = benefitConfig.startDate.replace(/-/g, '.');
+            const endDate = benefitConfig.endDate.replace(/-/g, '.');
+            const memberText = benefitConfig.memberTags.length > 0 ? benefitConfig.memberTags.join('、') : '全部分层';
+            const reachText = '会员分层：' + memberText + '，活动周期：' + startDate + ' 至 ' + endDate +
+                            '，触达方式：门店POS提示 + 会员推送 + 店员话术';
+
+            window.currentPublishSummary = {
+                copy: copyText,
+                stores: storeText,
+                risks: risksText,
+                reach: reachText,
+                dimension: dimension,
+                checks: checks,
+                selectedStores: selectedStores
+            };
+
+            let checksHtml = '';
+            checks.slice(0, 3).forEach(item => {
+                const iconClass = item.status === 'pass' ? 'ri-checkbox-circle-fill mini-pass' :
+                                 item.status === 'warn' ? 'ri-error-warning-fill mini-warn' : 'ri-close-circle-fill mini-fail';
+                checksHtml += '<div class="check-item-mini"><i class="' + iconClass + '"></i>' +
+                    '<div><div style="font-weight: 500;">' + item.title + '</div>' +
+                    '<div style="font-size: 12px; color: #6b7280; margin-top: 2px;">' + item.desc + '</div></div></div>';
+            });
+
+            const html =
+                '<div style="margin-bottom:18px;">' +
+                    '<h4 style="font-size:15px;font-weight:600;color:#0f172a;margin:0 0 10px 0;">' +
+                        '<i class="ri-gift-line"></i> 权益文案</h4>' +
+                    '<div style="background:#f0f9ff;border-radius:8px;padding:14px;border-left:3px solid #0ea5e9;">' +
+                        '<div style="font-weight:500;color:#0c4a6e;">' + copyText + '</div>' +
+                        '<div style="font-size:12px;color:#0369a1;margin-top:6px;">排除说明：' + benefitConfig.excludeDesc + '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div style="margin-bottom:18px;">' +
+                    '<h4 style="font-size:15px;font-weight:600;color:#0f172a;margin:0 0 10px 0;">' +
+                        '<i class="ri-store-2-line"></i> 覆盖门店</h4>' +
+                    '<div style="background:#f0fdf4;border-radius:8px;padding:14px;border-left:3px solid #10b981;">' +
+                        '<div style="font-weight:500;color:#166534;">' + storeText + '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div style="margin-bottom:18px;">' +
+                    '<h4 style="font-size:15px;font-weight:600;color:#0f172a;margin:0 0 10px 0;">' +
+                        '<i class="ri-alert-line"></i> 风险项' +
+                        '<span style="font-size:12px;color:#64748b;font-weight:normal;">（合规检查：通过 ' + passCount + ' / 待确认 ' + warnCount + ' / 不通过 ' + failCount + '）</span></h4>' +
+                    '<div style="background:#fffbeb;border-radius:8px;padding:14px;border-left:3px solid #f59e0b;">' +
+                        '<div style="font-weight:500;color:#92400e;">' + risksText + '</div>' +
+                        (checksHtml ? '<div style="margin-top:10px;">' + checksHtml + '</div>' : '') +
+                    '</div>' +
+                '</div>' +
+                '<div style="margin-bottom:0;">' +
+                    '<h4 style="font-size:15px;font-weight:600;color:#0f172a;margin:0 0 10px 0;">' +
+                        '<i class="ri-notification-3-line"></i> 触达方式</h4>' +
+                    '<div style="background:#f5f3ff;border-radius:8px;padding:14px;border-left:3px solid #8b5cf6;">' +
+                        '<div style="font-weight:500;color:#5b21b6;">' + reachText + '</div>' +
+                        '<div style="font-size:12px;color:#7c3aed;margin-top:6px;">店员话术：' + benefitConfig.staffTip + '</div>' +
+                    '</div>' +
+                '</div>';
+
+            document.getElementById('summaryModalBody').innerHTML = html;
+            document.getElementById('summaryModal').classList.add('show');
+        }
+
+        function closeSummaryModal() {
+            document.getElementById('summaryModal').classList.remove('show');
+        }
+
+        function confirmPublishFromSummary() {
+            closeSummaryModal();
+            doPublishBenefit();
+        }
+
+        function doPublishBenefit() {
+            updateBenefitConfigFromForm();
+
+            const summary = window.currentPublishSummary;
+            const selectedStores = summary.selectedStores;
 
             const now = new Date();
             const pad = n => String(n).padStart(2, '0');
@@ -2092,8 +2148,7 @@
             const batchId = 'BATCH-' + now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate()) +
                            '-' + String(activityBatches.length + 1).padStart(3, '0');
 
-            const dimension = document.getElementById('checkDimension').value;
-            const checks = complianceData[dimension] || complianceData['all'];
+            const checks = summary.checks;
 
             const batch = {
                 id: batchId,
@@ -2108,7 +2163,15 @@
                 excludeDesc: benefitConfig.excludeDesc,
                 staffTip: benefitConfig.staffTip,
                 complianceChecks: checks,
-                status: 'running'
+                status: 'running',
+                operationLogs: [
+                    { time: publishTime, operator: '运营部-李经理', action: '创建权益', detail: '完成权益基本信息填写' },
+                    { time: publishTime, operator: '运营部-李经理', action: '合规检查', detail: '按' + (document.getElementById('checkDimension').options[document.getElementById('checkDimension').selectedIndex].text || '全部维度') + '完成检查，通过 ' + checks.filter(c => c.status === 'pass').length + ' 项' },
+                    { time: publishTime, operator: '运营部-李经理', action: '选择门店', detail: '选择 ' + selectedStores.length + ' 家门店' },
+                    { time: publishTime, operator: '运营部-李经理', action: '发布前摘要确认', detail: '权益文案、覆盖门店、风险项、触达方式已核对无误' },
+                    { time: publishTime, operator: '运营部-李经理', action: '确认发布', detail: '权益正式发布，同步至门店和会员端' }
+                ],
+                publishSummary: summary
             };
 
             activityBatches.unshift(batch);
@@ -2117,6 +2180,8 @@
             if (tbody) {
                 const tr = document.createElement('tr');
                 tr.style.background = '#f0f9ff';
+                tr.style.cursor = 'pointer';
+                tr.setAttribute('onclick', 'openBatchDetail(activityBatches[0])');
                 tr.innerHTML =
                     '<td><span class="status-tag status-running">进行中</span></td>' +
                     '<td style="font-weight: 500;">' + benefitConfig.name + '</td>' +
@@ -2128,6 +2193,8 @@
                     '<td>-</td><td style="color: #6b7280;">-</td>';
                 tbody.insertBefore(tr, tbody.firstChild);
             }
+
+            renderBenefitList();
 
             alert('权益发布成功！批次号：' + batchId + '\n已覆盖 ' + selectedStores.length + ' 家门店');
             openBatchDetail(batch);
@@ -2337,11 +2404,13 @@
         function updateCompareView() {
             const checkboxes = document.querySelectorAll('.cmp-cb');
             const selected = [];
+            let lastChecked = null;
             checkboxes.forEach(cb => {
                 const key = cb.getAttribute('data-cmp');
                 const label = document.getElementById('cmp-label-' + key);
                 if (cb.checked) {
                     selected.push(key);
+                    lastChecked = { cb, key, label };
                     if (label) {
                         label.style.borderColor = dashboardCompareMap[key].color;
                         label.style.background = dashboardCompareMap[key].color + '15';
@@ -2354,11 +2423,19 @@
                 }
             });
 
+            if (selected.length > 3) {
+                lastChecked.cb.checked = false;
+                lastChecked.label.style.borderColor = '#e2e8f0';
+                lastChecked.label.style.background = '#f8fafc';
+                selected.pop();
+                alert('最多只能选择 3 个权益进行对比哦！');
+            }
+
             if (selected.length < 2) {
                 document.getElementById('compareMetrics').innerHTML =
                     '<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #6b7280; font-size: 14px;">' +
                     '<i class="ri-information-line" style="font-size: 28px; display: block; margin-bottom: 8px;"></i>' +
-                    '请至少选择 2 个权益进行对比</div>';
+                    '请选择 2-3 个权益进行对比</div>';
                 document.getElementById('compareRankTable').querySelector('tbody').innerHTML = '';
                 if (compareChart) {
                     compareChart.data.datasets = [];
@@ -2367,12 +2444,20 @@
                 return;
             }
 
+            const allData = selected.map(key => {
+                return { key: key, name: dashboardCompareMap[key].name, data: dashboardCompareMap[key].data };
+            }).sort((a, b) => b.data.repurchaseDiff - a.data.repurchaseDiff);
+            const topKey = allData[0].key;
+
             const metricsHtml = selected.map((key, idx) => {
                 const info = dashboardCompareMap[key];
                 const d = info.data;
-                return '<div class="compare-card">' +
+                const isTop = key === topKey;
+                const cardStyle = isTop ? 'box-shadow: 0 4px 20px ' + info.color + '50;border: 2px solid ' + info.color + ';' : '';
+                return '<div class="compare-card" style="' + cardStyle + '">' +
                     '<div class="compare-card-header" style="background: ' + info.color + ';">' +
-                        (idx === 0 ? '<i class="ri-vip-crown-line"></i> ' : '') + info.name +
+                        (isTop ? '<i class="ri-vip-crown-fill"></i> 👑 ' : '') + info.name +
+                        (isTop ? ' <span style="font-size:12px;opacity:0.9;">· 复购带动最佳</span>' : '') +
                     '</div>' +
                     '<div class="compare-card-body">' +
                         '<div class="compare-metric"><span class="compare-metric-label">领取人数</span>' +
@@ -2386,7 +2471,7 @@
                         '<div class="compare-metric"><span class="compare-metric-label">客单价</span>' +
                             '<span class="compare-metric-value">¥' + d.order.toFixed(1) + '</span></div>' +
                         '<div class="compare-metric"><span class="compare-metric-label">复购提升</span>' +
-                            '<span class="compare-metric-value compare-highlight">+' + d.repurchaseDiff.toFixed(1) + '%</span></div>' +
+                            '<span class="compare-metric-value ' + (isTop ? 'compare-highlight' : '') + '" style="' + (isTop ? 'font-size:18px;' : '') + '">+' + d.repurchaseDiff.toFixed(1) + '%</span></div>' +
                     '</div></div>';
             }).join('');
             const metricsDiv = document.getElementById('compareMetrics');
@@ -2400,12 +2485,13 @@
             const datasets = selected.map(key => {
                 const info = dashboardCompareMap[key];
                 const d = info.data;
+                const isTop = key === topKey;
                 return {
-                    label: info.name,
+                    label: info.name + (isTop ? ' 👑' : ''),
                     data: [d.receive / 1000, d.use / 1000, parseFloat(d.payRatio), d.order, d.repurchaseDiff],
-                    backgroundColor: info.color + 'cc',
+                    backgroundColor: info.color + (isTop ? 'ee' : '99'),
                     borderColor: info.color,
-                    borderWidth: 1
+                    borderWidth: isTop ? 3 : 1
                 };
             });
 
@@ -2429,23 +2515,20 @@
                 });
             }
 
-            const allData = selected.map(key => {
-                return { key: key, name: dashboardCompareMap[key].name, data: dashboardCompareMap[key].data };
-            }).sort((a, b) => b.data.repurchaseDiff - a.data.repurchaseDiff);
-
-            const rankColors = ['#fbbf24', '#94a3b8', '#d97706'];
             const rankHtml = allData.map((item, idx) => {
                 const d = item.data;
-                const icon = idx === 0 ? '👑 ' : (idx + 1);
-                const rowStyle = idx === 0 ? 'background: #fffbeb;' : '';
+                const isTop = idx === 0;
+                const icon = isTop ? '👑' : (idx + 1);
+                const rowStyle = isTop ? 'background: linear-gradient(90deg, #fffbeb, #fef3c7); font-size: 15px;' : '';
+                const fontWeight = isTop ? 'font-weight: 700;' : '';
                 return '<tr style="' + rowStyle + '">' +
-                    '<td style="font-size: 18px;">' + icon + '</td>' +
-                    '<td style="font-weight: 500;">' + item.name + '</td>' +
+                    '<td style="font-size: 20px;' + fontWeight + '">' + icon + '</td>' +
+                    '<td style="' + fontWeight + '">' + item.name + '</td>' +
                     '<td>' + d.receive.toLocaleString() + '</td>' +
                     '<td>' + d.use.toLocaleString() + '</td>' +
-                    '<td style="color: #0ea5e9; font-weight: 500;">' + d.payRatio + '</td>' +
+                    '<td style="color: #0ea5e9; font-weight: 600;">' + d.payRatio + '</td>' +
                     '<td>¥' + d.order.toFixed(1) + '</td>' +
-                    '<td style="color: #10b981; font-weight: 600;">+' + d.repurchaseDiff.toFixed(1) + '%</td>' +
+                    '<td style="color: #10b981; font-weight: 700; font-size: 16px;">+' + d.repurchaseDiff.toFixed(1) + '%</td>' +
                     '</tr>';
             }).join('');
             document.getElementById('compareRankTable').querySelector('tbody').innerHTML = rankHtml;
@@ -2475,6 +2558,40 @@
             ).join('') + ((batch.storeList || []).length > 8 ?
                 '<span style="font-size:12px;color:#64748b;margin-left:4px;">等' + batch.storeList.length + '家</span>' : '');
 
+            let logsHtml = '';
+            (batch.operationLogs || []).forEach(log => {
+                let icon = 'ri-edit-2-line';
+                let color = '#64748b';
+                if (log.action.includes('发布') || log.action.includes('审批')) { icon = 'ri-send-plane-fill'; color = '#0ea5e9'; }
+                else if (log.action.includes('检查') || log.action.includes('复核')) { icon = 'ri-shield-check-fill'; color = '#10b981'; }
+                else if (log.action.includes('调整') || log.action.includes('修改')) { icon = 'ri-settings-3-fill'; color = '#f59e0b'; }
+                else if (log.action.includes('结束')) { icon = 'ri-checkbox-circle-fill'; color = '#64748b'; }
+                logsHtml += '<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed #e5e7eb;">' +
+                    '<i class="' + icon + '" style="font-size:18px;color:' + color + ';margin-top:2px;"></i>' +
+                    '<div style="flex:1;">' +
+                        '<div style="display:flex;justify-content:space-between;">' +
+                            '<span style="font-weight:500;color:#0f172a;">' + log.action + '</span>' +
+                            '<span style="font-size:12px;color:#94a3b8;">' + log.time + '</span>' +
+                        '</div>' +
+                        '<div style="font-size:13px;color:#64748b;margin-top:4px;">' + log.operator + ' · ' + log.detail + '</div>' +
+                    '</div></div>';
+            });
+
+            let summaryHtml = '';
+            if (batch.publishSummary) {
+                summaryHtml =
+                    '<div style="margin-bottom:18px;">' +
+                        '<h4 style="font-size:15px;font-weight:600;color:#0f172a;margin:0 0 10px 0;">' +
+                            '<i class="ri-file-list-3-line"></i> 发布前摘要</h4>' +
+                        '<div style="background:#f8fafc;border-radius:8px;padding:14px;">' +
+                            '<div class="info-row"><span class="info-label">权益文案</span><span class="info-value">' + batch.publishSummary.copy + '</span></div>' +
+                            '<div class="info-row"><span class="info-label">覆盖门店</span><span class="info-value">' + batch.publishSummary.stores + '</span></div>' +
+                            '<div class="info-row"><span class="info-label">风险项</span><span class="info-value" style="color:#d97706;">' + batch.publishSummary.risks + '</span></div>' +
+                            '<div class="info-row"><span class="info-label">触达方式</span><span class="info-value">' + batch.publishSummary.reach + '</span></div>' +
+                        '</div>' +
+                    '</div>';
+            }
+
             const html =
                 '<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">' +
                     '<span class="status-tag ' + statusClass + '">' + statusText + '</span>' +
@@ -2491,16 +2608,22 @@
                     '<div class="info-row"><span class="info-label">非医保排除说明</span><span class="info-value">' + (batch.excludeDesc || '-') + '</span></div>' +
                     '<div class="info-row"><span class="info-label">店员话术</span><span class="info-value">' + (batch.staffTip || '-') + '</span></div>' +
                 '</div>' +
+                summaryHtml +
                 '<div style="margin-bottom:18px;">' +
                     '<h4 style="font-size:15px;font-weight:600;color:#0f172a;margin:0 0 10px 0;">' +
                         '<i class="ri-store-2-line"></i> 覆盖门店（' + batch.storeCount + ' 家）</h4>' +
                     '<div>' + storesHtml + '</div>' +
                 '</div>' +
-                '<div>' +
+                '<div style="margin-bottom:18px;">' +
                     '<h4 style="font-size:15px;font-weight:600;color:#0f172a;margin:0 0 10px 0;">' +
                         '<i class="ri-shield-check-line"></i> 合规检查结果 ' +
                         '<span style="font-size:12px;color:#64748b;font-weight:normal;">（通过 ' + passCount + ' / 待确认 ' + warnCount + ' / 不通过 ' + failCount + '）</span></h4>' +
                     (checksHtml || '<p style="font-size:13px;color:#64748b;">暂无检查记录</p>') +
+                '</div>' +
+                '<div>' +
+                    '<h4 style="font-size:15px;font-weight:600;color:#0f172a;margin:0 0 10px 0;">' +
+                        '<i class="ri-time-line"></i> 运营动作记录</h4>' +
+                    (logsHtml || '<p style="font-size:13px;color:#64748b;">暂无操作记录</p>') +
                 '</div>';
 
             document.getElementById('batchModalBody').innerHTML = html;
@@ -2509,6 +2632,61 @@
 
         function closeBatchModal() {
             document.getElementById('batchModal').classList.remove('show');
+        }
+
+        function renderBenefitList() {
+            const statusFilter = document.getElementById('benefitListStatus')?.value || '';
+            const tagFilter = document.getElementById('benefitListTag')?.value || '';
+            const searchKw = (document.getElementById('benefitListSearch')?.value || '').toLowerCase();
+
+            const tbody = document.getElementById('benefitListTbody');
+            if (!tbody) return;
+
+            let html = '';
+            let count = 0;
+            activityBatches.forEach((batch, idx) => {
+                if (statusFilter && batch.status !== statusFilter) return;
+                if (tagFilter && !batch.memberTag.includes(tagFilter)) return;
+                if (searchKw && !batch.benefitName.toLowerCase().includes(searchKw)) return;
+
+                count++;
+                const statusClass = batch.status === 'running' ? 'status-running' : (batch.status === 'ended' ? 'status-ended' : 'status-pending');
+                const statusText = batch.status === 'running' ? '进行中' : (batch.status === 'ended' ? '已结束' : '待发布');
+                const start = (batch.startDate || '').replace(/-/g, '.');
+                const end = (batch.endDate || '').replace(/-/g, '.');
+
+                html += '<tr style="cursor:pointer;" onclick="openBatchDetail(activityBatches[' + idx + '])">' +
+                    '<td><span class="status-tag ' + statusClass + '">' + statusText + '</span></td>' +
+                    '<td style="font-weight:500;">' + batch.benefitName + '</td>' +
+                    '<td>' + batch.memberTag + '</td>' +
+                    '<td>' + batch.storeCount + '家</td>' +
+                    '<td>' + start + ' - ' + end + '</td>' +
+                    '<td>' +
+                        '<a style="color:#0ea5e9;cursor:pointer;margin-right:10px;" onclick="event.stopPropagation();openBatchDetail(activityBatches[' + idx + '])">查看详情</a>' +
+                        (batch.status === 'running' ?
+                            '<a style="color:#f59e0b;cursor:pointer;margin-right:10px;" onclick="event.stopPropagation();alert(\'调整门店范围功能开发中\')">调整门店</a>' +
+                            '<a style="color:#ef4444;cursor:pointer;" onclick="event.stopPropagation();alert(\'下架功能开发中\')">下架</a>' :
+                            '<a style="color:#0ea5e9;cursor:pointer;" onclick="event.stopPropagation();alert(\'复制权益功能开发中\')">复制</a>') +
+                    '</td></tr>';
+            });
+            tbody.innerHTML = html || '<tr><td colspan="6" style="text-align:center;padding:40px;color:#9ca3af;">暂无符合条件的活动</td></tr>';
+            document.getElementById('benefitListCount').textContent = count;
+        }
+
+        function switchTab(page, tab) {
+            const tabContainer = document.getElementById(page + '-' + tab).parentElement;
+            tabContainer.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            document.getElementById(page + '-' + tab).style.display = 'block';
+
+            const tabNav = tabContainer.previousElementSibling;
+            if (tabNav && tabNav.classList.contains('tabs')) {
+                tabNav.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                tabNav.querySelector('.tab-item[data-tab="' + tab + '"]').classList.add('active');
+            }
+
+            if (page === 'benefit' && tab === 'list') {
+                renderBenefitList();
+            }
         }
 
         const style = document.createElement('style');
@@ -2579,6 +2757,24 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" onclick="closeBatchModal()">确定</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="summaryModal" onclick="if(event.target===this)closeSummaryModal()">
+        <div class="modal" style="width: 780px;">
+            <div class="modal-header">
+                <h3><i class="ri-file-list-3-line"></i> 发布前摘要确认</h3>
+                <button class="btn btn-outline" style="padding: 4px 10px; font-size: 13px;" onclick="closeSummaryModal()">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="summaryModalBody">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSummaryModal()">返回修改</button>
+                <button class="btn btn-primary" onclick="confirmPublishFromSummary()">
+                    <i class="ri-send-plane-line"></i> 确认发布
+                </button>
             </div>
         </div>
     </div>
