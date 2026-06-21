@@ -843,8 +843,8 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 20px; padding: 16px; background: #f0f9ff; border-radius: 8px;">
                     <div style="flex: 1;">
-                        <h3 style="font-size: 16px; font-weight: 600; color: #0c4a6e; margin-bottom: 4px;">慢病用药个账支付专属权益</h3>
-                        <p style="font-size: 13px; color: #0369a1;">
+                        <h3 style="font-size: 16px; font-weight: 600; color: #0c4a6e; margin-bottom: 4px;" id="storeBenefitName">慢病用药个账支付专属权益</h3>
+                        <p style="font-size: 13px; color: #0369a1;" id="storeBenefitDesc">
                             <i class="ri-calendar-line"></i> 2026.06.23 - 2026.09.30
                             <span style="margin: 0 10px;">|</span>
                             <i class="ri-user-heart-line"></i> 慢病会员
@@ -899,7 +899,7 @@
                         </div>
 
                         <div style="max-height: 400px; overflow-y: auto;" id="storeList">
-                            <div class="store-item selected" onclick="toggleStore(this)">
+                            <div class="store-item selected" data-city="beijing" data-policy="support" onclick="toggleStore(this)">
                                 <div class="store-info">
                                     <input type="checkbox" class="checkbox" checked>
                                     <div>
@@ -909,7 +909,7 @@
                                 </div>
                                 <span class="status-badge active">正常营业</span>
                             </div>
-                            <div class="store-item selected" onclick="toggleStore(this)">
+                            <div class="store-item selected" data-city="beijing" data-policy="support" onclick="toggleStore(this)">
                                 <div class="store-info">
                                     <input type="checkbox" class="checkbox" checked>
                                     <div>
@@ -919,7 +919,7 @@
                                 </div>
                                 <span class="status-badge active">正常营业</span>
                             </div>
-                            <div class="store-item selected" onclick="toggleStore(this)">
+                            <div class="store-item selected" data-city="beijing" data-policy="support" onclick="toggleStore(this)">
                                 <div class="store-info">
                                     <input type="checkbox" class="checkbox" checked>
                                     <div>
@@ -929,7 +929,7 @@
                                 </div>
                                 <span class="status-badge active">正常营业</span>
                             </div>
-                            <div class="store-item" onclick="toggleStore(this)">
+                            <div class="store-item" data-city="shanghai" data-policy="support" onclick="toggleStore(this)">
                                 <div class="store-info">
                                     <input type="checkbox" class="checkbox">
                                     <div>
@@ -939,7 +939,7 @@
                                 </div>
                                 <span class="status-badge active">正常营业</span>
                             </div>
-                            <div class="store-item" onclick="toggleStore(this)">
+                            <div class="store-item" data-city="shanghai" data-policy="support" onclick="toggleStore(this)">
                                 <div class="store-info">
                                     <input type="checkbox" class="checkbox">
                                     <div>
@@ -949,7 +949,7 @@
                                 </div>
                                 <span class="status-badge active">正常营业</span>
                             </div>
-                            <div class="store-item" onclick="toggleStore(this)">
+                            <div class="store-item" data-city="guangzhou" data-policy="partial" onclick="toggleStore(this)">
                                 <div class="store-info">
                                     <input type="checkbox" class="checkbox">
                                     <div>
@@ -959,7 +959,7 @@
                                 </div>
                                 <span class="status-badge active">正常营业</span>
                             </div>
-                            <div class="store-item" onclick="toggleStore(this)">
+                            <div class="store-item" data-city="shenzhen" data-policy="support" onclick="toggleStore(this)">
                                 <div class="store-info">
                                     <input type="checkbox" class="checkbox">
                                     <div>
@@ -969,12 +969,52 @@
                                 </div>
                                 <span class="status-badge active">正常营业</span>
                             </div>
-                            <div class="store-item" onclick="toggleStore(this)">
+                            <div class="store-item" data-city="hangzhou" data-policy="support" onclick="toggleStore(this)">
                                 <div class="store-info">
                                     <input type="checkbox" class="checkbox">
                                     <div>
                                         <div class="store-name">杭州西湖银泰店</div>
                                         <div class="store-addr">杭州市西湖区延安路98号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" data-city="guangzhou" data-policy="partial" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">广州越秀北京路店</div>
+                                        <div class="store-addr">广州市越秀区北京路32号 · 部分支持</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" data-city="shenzhen" data-policy="support" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">深圳福田中心城店</div>
+                                        <div class="store-addr">深圳市福田区福华一路3号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" data-city="hangzhou" data-policy="nosupport" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">杭州余杭万达店</div>
+                                        <div class="store-addr">杭州市余杭区文一西路1号 · 暂不支持</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" data-city="shanghai" data-policy="support" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">上海徐汇港汇店</div>
+                                        <div class="store-addr">上海市徐汇区虹桥路1号 · 支持个账支付</div>
                                     </div>
                                 </div>
                                 <span class="status-badge active">正常营业</span>
@@ -1149,30 +1189,30 @@
 
             <div class="grid-4" style="margin-bottom: 20px;">
                 <div class="stat-card">
-                    <div class="stat-value">12,580</div>
+                    <div class="stat-value" id="statReceive">12,580</div>
                     <div class="stat-label">权益领取人数</div>
-                    <div class="stat-trend up">
+                    <div class="stat-trend up" id="statReceiveTrend">
                         <i class="ri-arrow-up-line"></i>较上期增长 23.5%
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">8,942</div>
+                    <div class="stat-value" id="statUse">8,942</div>
                     <div class="stat-label">到店核销人次</div>
-                    <div class="stat-trend up">
+                    <div class="stat-trend up" id="statUseTrend">
                         <i class="ri-arrow-up-line"></i>核销率 71.1%
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" style="color: #0ea5e9;">68.7%</div>
+                    <div class="stat-value" style="color: #0ea5e9;" id="statPayRatio">68.7%</div>
                     <div class="stat-label">个账支付占比</div>
-                    <div class="stat-trend up">
+                    <div class="stat-trend up" id="statPayTrend">
                         <i class="ri-arrow-up-line"></i>较活动前提升 15.2%
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" style="color: #10b981;">¥168.5</div>
+                    <div class="stat-value" style="color: #10b981;" id="statOrder">¥168.5</div>
                     <div class="stat-label">平均客单价</div>
-                    <div class="stat-trend up">
+                    <div class="stat-trend up" id="statOrderTrend">
                         <i class="ri-arrow-up-line"></i>较活动前提升 18.3%
                     </div>
                 </div>
@@ -1377,14 +1417,136 @@
     </div>
 
     <script>
+        const benefitConfig = {
+            name: '慢病用药个账支付专属权益',
+            type: 'coupon',
+            value: 20,
+            unit: 'yuan',
+            threshold: '满99元可用',
+            startDate: '2026-06-23',
+            endDate: '2026-09-30',
+            payHint: '使用医保个人账户支付，立享专属优惠',
+            excludeDesc: '保健品、医疗器械、消杀类商品不参与本活动',
+            staffTip: '您好，您的医保个人账户可以支付本次费用，还能享受专属优惠哦~',
+            memberTags: ['慢病会员']
+        };
+
+        const complianceData = {
+            'all': [
+                { status: 'pass', title: '北京市 · 医保政策口径', desc: '慢病用药个账支付符合北京医保政策，3家门店均支持' },
+                { status: 'pass', title: '上海市 · 医保政策口径', desc: '上海医保支持慢病个账支付，3家门店均通过' },
+                { status: 'pass', title: '会员等级匹配', desc: '慢病会员分层共12,580人，符合权益投放范围' },
+                { status: 'warn', title: '广州市 · 部分门店待确认', desc: '广州地区医保政策对个账支付有特殊限制，建议核实后发布' },
+                { status: 'warn', title: '商品类目合规提醒', desc: '建议进一步确认权益关联的具体药品是否在医保目录内' }
+            ],
+            'city': [
+                { status: 'pass', title: '北京市 · 3家门店', desc: '全部支持个账支付，政策匹配度100%' },
+                { status: 'pass', title: '上海市 · 3家门店', desc: '全部支持个账支付，政策匹配度100%' },
+                { status: 'warn', title: '广州市 · 2家门店', desc: '部分支持个账支付，建议核实特殊药品类目' },
+                { status: 'pass', title: '深圳市 · 2家门店', desc: '全部支持个账支付，政策匹配度100%' },
+                { status: 'warn', title: '杭州市 · 2家门店', desc: '1家暂不支持，建议排除或单独配置' }
+            ],
+            'policy': [
+                { status: 'pass', title: '支持个账支付 · 10家门店', desc: '可正常发布权益，预计覆盖85%目标会员' },
+                { status: 'warn', title: '部分支持 · 2家门店', desc: '需确认具体可支付药品种类，建议设置白名单' },
+                { status: 'fail', title: '暂不支持 · 1家门店', desc: '不建议发布，或改为非个账版本权益' },
+                { status: 'pass', title: '政策口径一致性检查', desc: '各城市政策口径差异已识别，可针对性配置文案' }
+            ],
+            'level': [
+                { status: 'pass', title: '普通会员 · 6,280人', desc: '符合权益投放条件，个账支付占比约58%' },
+                { status: 'pass', title: '银卡会员 · 3,560人', desc: '符合权益投放条件，个账支付占比约65%' },
+                { status: 'pass', title: '金卡会员 · 1,850人', desc: '符合权益投放条件，个账支付占比约75%' },
+                { status: 'pass', title: '钻石会员 · 890人', desc: '高价值人群，个账支付占比约82%，建议加强触达' },
+                { status: 'warn', title: '会员等级权益叠加提醒', desc: '需注意与现有会员等级权益的叠加规则' }
+            ]
+        };
+
+        const dashboardData = {
+            'all': {
+                receive: 30520, receiveTrend: '较上期增长 18.2%',
+                use: 22562, useRate: '74.0%',
+                payRatio: '65.2%', payTrend: '较活动前提升 12.8%',
+                order: 162.3, orderTrend: '较活动前提升 15.6%',
+                trendLabels: ['第1天','第3天','第5天','第7天','第10天','第15天','第20天','第25天','第30天'],
+                trendReceive: [1200,3200,5800,8500,12000,18500,24000,28000,30520],
+                trendUse: [520,1680,3250,5180,7640,12180,16870,19850,22562],
+                pay: [65.2,20.5,9.2,3.5,1.6],
+                orderLabels: ['第1周','第2周','第3周','第4周'],
+                orderBefore: [138,135,142,139],
+                orderAfter: [155,162,168,165],
+                repurchaseLabels: ['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周'],
+                repurchaseAfter: [25.8,27.5,29.2,30.5,31.2,31.8,31.5,31.8],
+                repurchaseBefore: [22.0,22.8,23.5,24.0,24.3,24.6,24.2,24.5],
+                repurchaseNow: 31.8, repurchaseOld: 24.5, repurchaseDiff: 7.3
+            },
+            'chronic': {
+                receive: 12580, receiveTrend: '较上期增长 23.5%',
+                use: 8942, useRate: '71.1%',
+                payRatio: '68.7%', payTrend: '较活动前提升 15.2%',
+                order: 168.5, orderTrend: '较活动前提升 18.3%',
+                trendLabels: ['第1天','第3天','第5天','第7天','第10天','第15天','第20天','第25天','第30天'],
+                trendReceive: [520,1280,2450,3680,5240,7680,9870,11250,12580],
+                trendUse: [180,620,1350,2180,3240,5180,6870,7850,8942],
+                pay: [68.7,18.5,8.2,3.1,1.5],
+                orderLabels: ['第1周','第2周','第3周','第4周'],
+                orderBefore: [142,138,145,140],
+                orderAfter: [158,165,172,168],
+                repurchaseLabels: ['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周'],
+                repurchaseAfter: [26.5,28.2,30.1,31.5,32.8,33.2,32.5,32.8],
+                repurchaseBefore: [22.3,23.1,23.8,24.2,24.5,24.8,24.3,24.5],
+                repurchaseNow: 32.8, repurchaseOld: 24.5, repurchaseDiff: 8.3
+            },
+            'silver': {
+                receive: 8320, receiveTrend: '较上期增长 19.8%',
+                use: 5876, useRate: '70.6%',
+                payRatio: '72.3%', payTrend: '较活动前提升 18.5%',
+                order: 152.8, orderTrend: '较活动前提升 16.2%',
+                trendLabels: ['第1天','第3天','第5天','第7天','第10天','第15天','第20天','第25天','第30天'],
+                trendReceive: [320,780,1520,2380,3540,5280,6870,7650,8320],
+                trendUse: [120,420,950,1580,2340,3780,4870,5450,5876],
+                pay: [72.3,16.2,7.5,2.8,1.2],
+                orderLabels: ['第1周','第2周','第3周','第4周'],
+                orderBefore: [128,125,132,130],
+                orderAfter: [145,152,158,155],
+                repurchaseLabels: ['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周'],
+                repurchaseAfter: [23.5,25.2,26.8,27.8,28.5,28.8,28.3,28.5],
+                repurchaseBefore: [20.5,21.2,21.8,22.2,22.5,22.8,22.4,22.5],
+                repurchaseNow: 28.5, repurchaseOld: 22.5, repurchaseDiff: 6.0
+            },
+            'family': {
+                receive: 15680, receiveTrend: '较上期增长 26.2%',
+                use: 9876, useRate: '63.0%',
+                payRatio: '61.2%', payTrend: '较活动前提升 10.5%',
+                order: 145.2, orderTrend: '较活动前提升 12.8%',
+                trendLabels: ['第1天','第3天','第5天','第7天','第10天','第15天','第20天','第25天','第30天'],
+                trendReceive: [680,1680,3150,4780,6840,9680,12570,14250,15680],
+                trendUse: [280,920,2050,3280,4840,6480,8270,9150,9876],
+                pay: [61.2,22.8,10.2,3.8,2.0],
+                orderLabels: ['第1周','第2周','第3周','第4周'],
+                orderBefore: [125,122,128,126],
+                orderAfter: [138,145,152,148],
+                repurchaseLabels: ['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周'],
+                repurchaseAfter: [21.5,23.0,24.5,25.5,26.2,26.5,26.1,26.3],
+                repurchaseBefore: [19.0,19.8,20.5,21.0,21.3,21.5,21.2,21.5],
+                repurchaseNow: 26.3, repurchaseOld: 21.5, repurchaseDiff: 4.8
+            }
+        };
+
+        let trendChart, payChart, orderChart, repurchaseChart;
+        let checkResultsVisible = false;
+
         function switchPage(page) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('page-' + page).classList.add('active');
             document.querySelector('.nav-item[data-page="' + page + '"]').classList.add('active');
-            
+
+            if (page === 'store') {
+                updateStoreBenefitInfo();
+            }
             if (page === 'dashboard') {
                 setTimeout(initCharts, 100);
+                setTimeout(updateDashboardMetrics, 150);
             }
         }
 
@@ -1392,7 +1554,7 @@
             const tabContainer = document.getElementById(page + '-' + tab).parentElement;
             tabContainer.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
             document.getElementById(page + '-' + tab).style.display = 'block';
-            
+
             const tabNav = tabContainer.previousElementSibling;
             if (tabNav && tabNav.classList.contains('tabs')) {
                 tabNav.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
@@ -1402,6 +1564,52 @@
 
         function toggleTag(el, group) {
             el.classList.toggle('selected');
+            updateBenefitConfigFromForm();
+        }
+
+        function updateBenefitConfigFromForm() {
+            benefitConfig.name = document.getElementById('benefitName').value;
+            benefitConfig.type = document.getElementById('benefitType').value;
+            benefitConfig.value = document.getElementById('benefitValue').value;
+            benefitConfig.unit = document.getElementById('benefitUnit').value;
+            benefitConfig.threshold = document.getElementById('useThreshold').value;
+            benefitConfig.startDate = document.getElementById('startDate').value;
+            benefitConfig.endDate = document.getElementById('endDate').value;
+            benefitConfig.payHint = document.getElementById('payHint').value;
+            benefitConfig.excludeDesc = document.getElementById('excludeDesc').value;
+            benefitConfig.staffTip = document.getElementById('staffTip').value;
+
+            const selectedTags = [];
+            document.querySelectorAll('.tag-item.selected').forEach(tag => {
+                selectedTags.push(tag.textContent.trim());
+            });
+            benefitConfig.memberTags = selectedTags;
+        }
+
+        function updateStoreBenefitInfo() {
+            updateBenefitConfigFromForm();
+
+            document.getElementById('storeBenefitName').textContent = benefitConfig.name;
+
+            const startDate = benefitConfig.startDate.replace(/-/g, '.');
+            const endDate = benefitConfig.endDate.replace(/-/g, '.');
+            const memberText = benefitConfig.memberTags.length > 0 ? benefitConfig.memberTags[0] : '全部分层';
+
+            let valueText = '';
+            if (benefitConfig.unit === 'yuan') {
+                valueText = (benefitConfig.threshold || '无门槛') + ' 减' + benefitConfig.value + '元';
+            } else if (benefitConfig.unit === 'percent') {
+                valueText = benefitConfig.value + '%折扣';
+            } else if (benefitConfig.unit === 'points') {
+                valueText = benefitConfig.value + '积分';
+            }
+
+            document.getElementById('storeBenefitDesc').innerHTML =
+                '<i class="ri-calendar-line"></i> ' + startDate + ' - ' + endDate +
+                '<span style="margin: 0 10px;">|</span>' +
+                '<i class="ri-user-heart-line"></i> ' + memberText +
+                '<span style="margin: 0 10px;">|</span>' +
+                '<i class="ri-coupon-line"></i> ' + valueText;
         }
 
         function toggleStore(el) {
@@ -1416,8 +1624,20 @@
             document.getElementById('selectedCount').textContent = count;
         }
 
+        function getVisibleStores() {
+            const stores = document.querySelectorAll('#storeList .store-item');
+            const visible = [];
+            stores.forEach(s => {
+                if (s.style.display !== 'none') {
+                    visible.push(s);
+                }
+            });
+            return visible;
+        }
+
         function selectAllStores() {
-            document.querySelectorAll('#storeList .store-item').forEach(item => {
+            const visible = getVisibleStores();
+            visible.forEach(item => {
                 item.classList.add('selected');
                 item.querySelector('.checkbox').checked = true;
             });
@@ -1425,7 +1645,8 @@
         }
 
         function clearAllStores() {
-            document.querySelectorAll('#storeList .store-item').forEach(item => {
+            const visible = getVisibleStores();
+            visible.forEach(item => {
                 item.classList.remove('selected');
                 item.querySelector('.checkbox').checked = false;
             });
@@ -1436,32 +1657,82 @@
             const city = document.getElementById('selectCity').value;
             const policy = document.getElementById('selectPolicy').value;
             const keyword = document.getElementById('searchStore').value.toLowerCase();
-            
+
             document.querySelectorAll('#storeList .store-item').forEach(item => {
+                const itemCity = item.getAttribute('data-city');
+                const itemPolicy = item.getAttribute('data-policy');
                 const name = item.querySelector('.store-name').textContent.toLowerCase();
-                const addr = item.querySelector('.store-addr').textContent;
-                
+
                 let show = true;
+                if (city && itemCity !== city) show = false;
+                if (policy && itemPolicy !== policy) show = false;
                 if (keyword && !name.includes(keyword)) show = false;
-                
+
                 item.style.display = show ? 'flex' : 'none';
             });
+
+            updateSelectedCount();
         }
 
         function runComplianceCheck() {
+            const dimension = document.getElementById('checkDimension').value;
             const btn = event.target.closest('button');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="ri-loader-4-line" style="animation: spin 1s linear infinite;"></i>检查中...';
             btn.disabled = true;
-            
+
             setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-                alert('合规检查完成！2项通过，2项待确认，请查看检查结果。');
-            }, 1500);
+                renderCheckResults(dimension);
+                checkResultsVisible = true;
+            }, 1200);
+        }
+
+        function renderCheckResults(dimension) {
+            const results = complianceData[dimension] || complianceData['all'];
+            const container = document.getElementById('checkResults');
+
+            let passCount = 0, warnCount = 0, failCount = 0;
+            let html = '';
+            results.forEach(item => {
+                if (item.status === 'pass') passCount++;
+                if (item.status === 'warn') warnCount++;
+                if (item.status === 'fail') failCount++;
+
+                const iconClass = item.status === 'pass' ? 'ri-checkbox-circle-fill' :
+                                 item.status === 'warn' ? 'ri-error-warning-fill' : 'ri-close-circle-fill';
+                html += '<div class="check-item ' + item.status + '">' +
+                    '<i class="' + iconClass + ' check-icon ' + item.status + '"></i>' +
+                    '<div class="check-content">' +
+                    '<div class="check-title">' + item.title + '</div>' +
+                    '<div class="check-desc">' + item.desc + '</div>' +
+                    '</div></div>';
+            });
+            container.innerHTML = html;
+
+            const total = results.length;
+            const passPercent = Math.round((passCount / total) * 100);
+            const progressFill = document.querySelector('#page-store .progress-fill');
+            if (progressFill) {
+                progressFill.style.width = passPercent + '%';
+            }
+
+            const infoDiv = document.querySelector('#checkResults').parentElement;
+            const statDiv = infoDiv.querySelector('div[style*="margin-top"]');
+            if (statDiv) {
+                const textSpan = statDiv.querySelector('div').querySelector('span:last-child');
+                if (textSpan) {
+                    let text = passCount + '项通过';
+                    if (warnCount > 0) text += ' / ' + warnCount + '项待确认';
+                    if (failCount > 0) text += ' / ' + failCount + '项不通过';
+                    textSpan.textContent = text;
+                }
+            }
         }
 
         function saveDraft() {
+            updateBenefitConfigFromForm();
             alert('草稿已保存！');
         }
 
@@ -1470,6 +1741,7 @@
         }
 
         function goToStorePublish() {
+            updateBenefitConfigFromForm();
             switchPage('store');
         }
 
@@ -1480,6 +1752,7 @@
         }
 
         function updateDashboard() {
+            updateDashboardMetrics();
             if (window.trendChart && window.payChart && window.orderChart && window.repurchaseChart) {
                 updateChartsData();
             } else {
@@ -1487,37 +1760,63 @@
             }
         }
 
-        let trendChart, payChart, orderChart, repurchaseChart;
+        function updateDashboardMetrics() {
+            const benefit = document.getElementById('dashboardBenefit').value;
+            const data = dashboardData[benefit] || dashboardData['chronic'];
+
+            document.getElementById('statReceive').textContent = data.receive.toLocaleString();
+            document.getElementById('statReceiveTrend').innerHTML = '<i class="ri-arrow-up-line"></i>' + data.receiveTrend;
+
+            document.getElementById('statUse').textContent = data.use.toLocaleString();
+            document.getElementById('statUseTrend').innerHTML = '<i class="ri-arrow-up-line"></i>核销率 ' + data.useRate;
+
+            document.getElementById('statPayRatio').textContent = data.payRatio;
+            document.getElementById('statPayTrend').innerHTML = '<i class="ri-arrow-up-line"></i>' + data.payTrend;
+
+            document.getElementById('statOrder').textContent = '¥' + data.order.toFixed(1);
+            document.getElementById('statOrderTrend').innerHTML = '<i class="ri-arrow-up-line"></i>' + data.orderTrend;
+
+            const repurchaseSection = document.querySelector('#page-dashboard .card .grid-3');
+            if (repurchaseSection) {
+                const valueDivs = repurchaseSection.querySelectorAll('div > div:first-child');
+                if (valueDivs.length >= 3) {
+                    valueDivs[0].textContent = data.repurchaseNow.toFixed(1) + '%';
+                    valueDivs[1].textContent = data.repurchaseOld.toFixed(1) + '%';
+                    valueDivs[2].textContent = '+' + data.repurchaseDiff.toFixed(1) + '%';
+                }
+            }
+        }
 
         function initCharts() {
+            const benefit = document.getElementById('dashboardBenefit').value;
+            const data = dashboardData[benefit] || dashboardData['chronic'];
+
             const trendCtx = document.getElementById('trendChart');
-            if (trendCtx && !trendChart) {
+            if (trendCtx) {
+                if (trendChart) trendChart.destroy();
                 trendChart = new Chart(trendCtx, {
                     type: 'line',
                     data: {
-                        labels: ['第1天', '第3天', '第5天', '第7天', '第10天', '第15天', '第20天', '第25天', '第30天'],
+                        labels: data.trendLabels,
                         datasets: [
                             {
                                 label: '领取人数',
-                                data: [520, 1280, 2450, 3680, 5240, 7680, 9870, 11250, 12580],
+                                data: data.trendReceive,
                                 borderColor: '#0ea5e9',
                                 backgroundColor: 'rgba(14, 165, 233, 0.1)',
-                                fill: true,
-                                tension: 0.4
+                                fill: true, tension: 0.4
                             },
                             {
                                 label: '核销人次',
-                                data: [180, 620, 1350, 2180, 3240, 5180, 6870, 7850, 8942],
+                                data: data.trendUse,
                                 borderColor: '#10b981',
                                 backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                                fill: true,
-                                tension: 0.4
+                                fill: true, tension: 0.4
                             }
                         ]
                     },
                     options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
+                        responsive: true, maintainAspectRatio: false,
                         plugins: { legend: { position: 'top' } },
                         scales: {
                             y: { beginAtZero: true, grid: { color: '#f3f4f6' } },
@@ -1528,46 +1827,37 @@
             }
 
             const payCtx = document.getElementById('payChart');
-            if (payCtx && !payChart) {
+            if (payCtx) {
+                if (payChart) payChart.destroy();
                 payChart = new Chart(payCtx, {
                     type: 'doughnut',
                     data: {
                         labels: ['医保个账支付', '微信支付', '支付宝', '现金', '其他'],
-                        datasets: [{
-                            data: [68.7, 18.5, 8.2, 3.1, 1.5],
-                            backgroundColor: ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#6b7280']
+                        datasets: [{ data: data.pay,
+                            backgroundColor: ['#0ea5e9','#10b981','#f59e0b','#8b5cf6','#6b7280']
                         }]
                     },
                     options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
+                        responsive: true, maintainAspectRatio: false,
                         plugins: { legend: { position: 'right' } }
                     }
                 });
             }
 
             const orderCtx = document.getElementById('orderChart');
-            if (orderCtx && !orderChart) {
+            if (orderCtx) {
+                if (orderChart) orderChart.destroy();
                 orderChart = new Chart(orderCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['第1周', '第2周', '第3周', '第4周'],
+                        labels: data.orderLabels,
                         datasets: [
-                            {
-                                label: '活动前客单价',
-                                data: [142, 138, 145, 140],
-                                backgroundColor: '#94a3b8'
-                            },
-                            {
-                                label: '活动期客单价',
-                                data: [158, 165, 172, 168],
-                                backgroundColor: '#0ea5e9'
-                            }
+                            { label: '活动前客单价', data: data.orderBefore, backgroundColor: '#94a3b8' },
+                            { label: '活动期客单价', data: data.orderAfter, backgroundColor: '#0ea5e9' }
                         ]
                     },
                     options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
+                        responsive: true, maintainAspectRatio: false,
                         plugins: { legend: { position: 'top' } },
                         scales: {
                             y: { beginAtZero: false, min: 100, grid: { color: '#f3f4f6' } },
@@ -1578,37 +1868,34 @@
             }
 
             const repurchaseCtx = document.getElementById('repurchaseChart');
-            if (repurchaseCtx && !repurchaseChart) {
+            if (repurchaseCtx) {
+                if (repurchaseChart) repurchaseChart.destroy();
                 repurchaseChart = new Chart(repurchaseCtx, {
                     type: 'line',
                     data: {
-                        labels: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周'],
+                        labels: data.repurchaseLabels,
                         datasets: [
                             {
                                 label: '活动期复购率',
-                                data: [26.5, 28.2, 30.1, 31.5, 32.8, 33.2, 32.5, 32.8],
+                                data: data.repurchaseAfter,
                                 borderColor: '#10b981',
                                 backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                                fill: true,
-                                tension: 0.4
+                                fill: true, tension: 0.4
                             },
                             {
                                 label: '活动前同期复购率',
-                                data: [22.3, 23.1, 23.8, 24.2, 24.5, 24.8, 24.3, 24.5],
+                                data: data.repurchaseBefore,
                                 borderColor: '#94a3b8',
                                 backgroundColor: 'rgba(148, 163, 184, 0.1)',
-                                fill: true,
-                                tension: 0.4,
-                                borderDash: [5, 5]
+                                fill: true, tension: 0.4, borderDash: [5, 5]
                             }
                         ]
                     },
                     options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
+                        responsive: true, maintainAspectRatio: false,
                         plugins: { legend: { position: 'top' } },
                         scales: {
-                            y: { beginAtZero: false, min: 20, max: 40, grid: { color: '#f3f4f6' } },
+                            y: { beginAtZero: false, min: 15, max: 40, grid: { color: '#f3f4f6' } },
                             x: { grid: { display: false } }
                         }
                     }
@@ -1618,42 +1905,12 @@
 
         function updateChartsData() {
             const benefit = document.getElementById('dashboardBenefit').value;
-            const dataMap = {
-                'all': {
-                    receive: [1200, 3200, 5800, 8500, 12000, 18500, 24000, 28000, 30520],
-                    use: [520, 1680, 3250, 5180, 7640, 12180, 16870, 19850, 22562],
-                    pay: [65.2, 20.5, 9.2, 3.5, 1.6],
-                    orderBefore: [138, 135, 142, 139],
-                    orderAfter: [155, 162, 168, 165]
-                },
-                'chronic': {
-                    receive: [520, 1280, 2450, 3680, 5240, 7680, 9870, 11250, 12580],
-                    use: [180, 620, 1350, 2180, 3240, 5180, 6870, 7850, 8942],
-                    pay: [68.7, 18.5, 8.2, 3.1, 1.5],
-                    orderBefore: [142, 138, 145, 140],
-                    orderAfter: [158, 165, 172, 168]
-                },
-                'silver': {
-                    receive: [320, 780, 1520, 2380, 3540, 5280, 6870, 7650, 8320],
-                    use: [120, 420, 950, 1580, 2340, 3780, 4870, 5450, 5876],
-                    pay: [72.3, 16.2, 7.5, 2.8, 1.2],
-                    orderBefore: [128, 125, 132, 130],
-                    orderAfter: [145, 152, 158, 155]
-                },
-                'family': {
-                    receive: [680, 1680, 3150, 4780, 6840, 9680, 12570, 14250, 15680],
-                    use: [280, 920, 2050, 3280, 4840, 6480, 8270, 9150, 9876],
-                    pay: [61.2, 22.8, 10.2, 3.8, 2.0],
-                    orderBefore: [125, 122, 128, 126],
-                    orderAfter: [138, 145, 152, 148]
-                }
-            };
-
-            const data = dataMap[benefit] || dataMap['chronic'];
+            const data = dashboardData[benefit] || dashboardData['chronic'];
 
             if (trendChart) {
-                trendChart.data.datasets[0].data = data.receive;
-                trendChart.data.datasets[1].data = data.use;
+                trendChart.data.labels = data.trendLabels;
+                trendChart.data.datasets[0].data = data.trendReceive;
+                trendChart.data.datasets[1].data = data.trendUse;
                 trendChart.update();
             }
             if (payChart) {
@@ -1661,9 +1918,16 @@
                 payChart.update();
             }
             if (orderChart) {
+                orderChart.data.labels = data.orderLabels;
                 orderChart.data.datasets[0].data = data.orderBefore;
                 orderChart.data.datasets[1].data = data.orderAfter;
                 orderChart.update();
+            }
+            if (repurchaseChart) {
+                repurchaseChart.data.labels = data.repurchaseLabels;
+                repurchaseChart.data.datasets[0].data = data.repurchaseAfter;
+                repurchaseChart.data.datasets[1].data = data.repurchaseBefore;
+                repurchaseChart.update();
             }
         }
 
@@ -1677,14 +1941,23 @@
         document.head.appendChild(style);
 
         document.addEventListener('DOMContentLoaded', function() {
-            const inputs = ['benefitName', 'benefitValue', 'benefitUnit', 'payHint', 'excludeDesc', 'staffTip', 'useThreshold'];
-            inputs.forEach(id => {
+            const inputIds = ['benefitName', 'benefitValue', 'benefitUnit', 'benefitType',
+                              'payHint', 'excludeDesc', 'staffTip', 'useThreshold', 'startDate', 'endDate'];
+            inputIds.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.addEventListener('input', updatePreview);
-                    el.addEventListener('change', updatePreview);
+                    el.addEventListener('input', function() {
+                        updatePreview();
+                        updateBenefitConfigFromForm();
+                    });
+                    el.addEventListener('change', function() {
+                        updatePreview();
+                        updateBenefitConfigFromForm();
+                    });
                 }
             });
+
+            updateStoreBenefitInfo();
         });
 
         function updatePreview() {
