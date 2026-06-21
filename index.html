@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医保个账权益配置台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f5f7fa;
+            color: #1f2937;
+        }
+        .sidebar {
+            width: 220px;
+            background: #1e293b;
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+        .sidebar-logo {
+            padding: 20px 16px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar-logo i {
+            font-size: 24px;
+            color: #38bdf8;
+        }
+        .sidebar-logo span {
+            color: #f8fafc;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .nav-item:hover {
+            background: #334155;
+            color: #f1f5f9;
+        }
+        .nav-item.active {
+            background: #334155;
+            color: #38bdf8;
+            border-left-color: #38bdf8;
+        }
+        .nav-item i {
+            font-size: 18px;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 24px 32px;
+        }
+        .page-header {
+            margin-bottom: 24px;
+        }
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .page-desc {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-title i {
+            color: #0ea5e9;
+            font-size: 18px;
+        }
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.1);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fff;
+            color: #4b5563;
+        }
+        .tag-item:hover {
+            border-color: #0ea5e9;
+            color: #0284c7;
+        }
+        .tag-item.selected {
+            background: #e0f2fe;
+            border-color: #0ea5e9;
+            color: #0369a1;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary {
+            background: #0ea5e9;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #0284c7;
+        }
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        .btn-success {
+            background: #10b981;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #059669;
+        }
+        .btn-outline {
+            background: #fff;
+            border: 1px solid #d1d5db;
+            color: #4b5563;
+        }
+        .btn-outline:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .stat-card .stat-trend {
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        .stat-trend.up {
+            color: #10b981;
+        }
+        .stat-trend.down {
+            color: #ef4444;
+        }
+        .preview-card {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border-radius: 12px;
+            padding: 20px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .preview-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .preview-card-member {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .preview-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .preview-card .hint {
+            font-size: 12px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        .preview-card .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .store-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        .store-item:hover {
+            border-color: #0ea5e9;
+            background: #f0f9ff;
+        }
+        .store-item.selected {
+            border-color: #0ea5e9;
+            background: #e0f2fe;
+        }
+        .store-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .store-info i {
+            color: #0ea5e9;
+            font-size: 18px;
+        }
+        .store-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+        .store-addr {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .check-item.pass {
+            border-color: #10b981;
+            background: #ecfdf5;
+        }
+        .check-item.warn {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+        .check-item.fail {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+        .check-icon {
+            font-size: 20px;
+        }
+        .check-icon.pass { color: #10b981; }
+        .check-icon.warn { color: #f59e0b; }
+        .check-icon.fail { color: #ef4444; }
+        .check-content {
+            flex: 1;
+        }
+        .check-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+        .check-desc {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+        .tab-item {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #6b7280;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .tab-item:hover {
+            color: #0ea5e9;
+        }
+        .tab-item.active {
+            color: #0ea5e9;
+            border-bottom-color: #0ea5e9;
+            font-weight: 500;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th {
+            text-align: left;
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #6b7280;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .table td {
+            padding: 12px;
+            font-size: 14px;
+            color: #374151;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .table tr:hover td {
+            background: #f9fafb;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .status-badge.active {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .status-badge.draft {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+        .status-badge.ended {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+        .chart-container {
+            height: 280px;
+            position: relative;
+        }
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-item label {
+            font-size: 13px;
+            color: #6b7280;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0ea5e9, #10b981);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 16px 0;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 1200px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+            .sidebar { width: 60px; }
+            .sidebar-logo span, .nav-item span { display: none; }
+            .main-content { margin-left: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="ri-shield-cross-line"></i>
+            <span>医保个账权益台</span>
+        </div>
+        <div style="padding: 12px 0;">
+            <div class="nav-item active" data-page="benefit" onclick="switchPage('benefit')">
+                <i class="ri-gift-line"></i>
+                <span>权益配置</span>
+            </div>
+            <div class="nav-item" data-page="store" onclick="switchPage('store')">
+                <i class="ri-store-2-line"></i>
+                <span>门店发布</span>
+            </div>
+            <div class="nav-item" data-page="dashboard" onclick="switchPage('dashboard')">
+                <i class="ri-bar-chart-box-line"></i>
+                <span>效果看板</span>
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 20px; left: 0; right: 0; padding: 0 16px;">
+            <div style="border-top: 1px solid #334155; padding-top: 12px;">
+                <div class="nav-item">
+                    <i class="ri-user-line"></i>
+                    <span>运营管理员</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="page-benefit" class="page-section active">
+            <div class="page-header">
+                <h1 class="page-title">权益配置</h1>
+                <p class="page-desc">创建和管理医保个账可感知权益包，配置会员分层、权益内容和展示样式</p>
+            </div>
+
+            <div class="tabs">
+                <div class="tab-item active" data-tab="create" onclick="switchTab('benefit', 'create')">新建权益</div>
+                <div class="tab-item" data-tab="list" onclick="switchTab('benefit', 'list')">权益列表</div>
+            </div>
+
+            <div id="benefit-create" class="tab-content">
+                <div class="grid-2">
+                    <div>
+                        <div class="card">
+                            <div class="card-title">
+                                <i class="ri-user-star-line"></i>
+                                会员分层选择
+                            </div>
+                            <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">选择该权益适用的会员人群</p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                <div class="tag-item selected" onclick="toggleTag(this, 'member')">
+                                    <i class="ri-heart-pulse-line"></i>慢病会员
+                                </div>
+                                <div class="tag-item" onclick="toggleTag(this, 'member')">
+                                    <i class="ri-home-heart-line"></i>家庭常备药
+                                </div>
+                                <div class="tag-item" onclick="toggleTag(this, 'member')">
+                                    <i class="ri-user-6-line"></i>银发关怀
+                                </div>
+                                <div class="tag-item" onclick="toggleTag(this, 'member')">
+                                    <i class="ri-vip-crown-line"></i>高价值会员
+                                </div>
+                                <div class="tag-item" onclick="toggleTag(this, 'member')">
+                                    <i class="ri-mother-line"></i>孕产妈妈
+                                </div>
+                                <div class="tag-item" onclick="toggleTag(this, 'member')">
+                                    <i class="ri-bear-smile-line"></i>儿童健康
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">
+                                <i class="ri-file-edit-line"></i>
+                                权益基本信息
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <label class="form-label">权益名称 <span style="color: #ef4444;">*</span></label>
+                                <input type="text" class="form-input" id="benefitName" placeholder="如：慢病用药个账支付专属权益" value="慢病用药个账支付专属权益">
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <label class="form-label">权益类型</label>
+                                <select class="form-select" id="benefitType">
+                                    <option value="discount">个账支付折扣</option>
+                                    <option value="coupon">个账支付立减券</option>
+                                    <option value="points">个账支付多倍积分</option>
+                                    <option value="gift">个账支付赠礼</option>
+                                </select>
+                            </div>
+                            <div class="grid-2" style="gap: 12px; margin-bottom: 16px;">
+                                <div>
+                                    <label class="form-label">生效日期</label>
+                                    <input type="date" class="form-input" id="startDate" value="2026-06-23">
+                                </div>
+                                <div>
+                                    <label class="form-label">结束日期</label>
+                                    <input type="date" class="form-input" id="endDate" value="2026-09-30">
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <label class="form-label">权益面额</label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" class="form-input" style="flex: 1;" id="benefitValue" value="20">
+                                    <select class="form-select" style="width: 100px;" id="benefitUnit">
+                                        <option value="yuan">元</option>
+                                        <option value="percent">%折扣</option>
+                                        <option value="points">积分</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <label class="form-label">使用门槛</label>
+                                <input type="text" class="form-input" id="useThreshold" placeholder="如：满100元可用，不填则无门槛" value="满99元可用">
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">
+                                <i class="ri-text"></i>
+                                文案配置
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <label class="form-label">个账支付提示文案 <span style="color: #ef4444;">*</span></label>
+                                <textarea class="form-textarea" id="payHint" placeholder="展示给用户的个账支付提示">使用医保个人账户支付，立享专属优惠</textarea>
+                                <p style="font-size: 12px; color: #6b7280; margin-top: 4px;">该文案将在收银台和会员端展示</p>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <label class="form-label">非医保商品排除说明</label>
+                                <textarea class="form-textarea" id="excludeDesc" placeholder="说明哪些商品不参与个账支付优惠">保健品、医疗器械、消杀类商品不参与本活动</textarea>
+                                <p style="font-size: 12px; color: #6b7280; margin-top: 4px;">用于提示店员和会员，避免合规风险</p>
+                            </div>
+                            <div>
+                                <label class="form-label">店员话术提示</label>
+                                <textarea class="form-textarea" id="staffTip" placeholder="给店员的推荐话术建议">您好，您的医保个人账户可以支付本次费用，还能享受专属优惠哦~</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="card">
+                            <div class="card-title">
+                                <i class="ri-eye-line"></i>
+                                实时预览
+                            </div>
+                            <p style="font-size: 13px; color: #6b7280; margin-bottom: 16px;">预览权益卡片在不同端的展示效果</p>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <p style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 10px;">
+                                    <i class="ri-smartphone-line" style="color: #10b981; margin-right: 4px;"></i>会员端展示
+                                </p>
+                                <div class="preview-card preview-card-member" id="memberPreview">
+                                    <h4 id="previewMemberName">慢病用药个账支付专属权益</h4>
+                                    <div style="font-size: 24px; font-weight: 700; margin: 8px 0; position: relative; z-index: 1;">
+                                        ¥<span id="previewMemberValue">20</span><span style="font-size: 14px; font-weight: 400;" id="previewMemberUnit">立减券</span>
+                                    </div>
+                                    <div class="hint" id="previewMemberHint">使用医保个人账户支付，立享专属优惠</div>
+                                    <div class="badge" id="previewMemberThreshold">满99元可用</div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <p style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 10px;">
+                                    <i class="ri-shopping-cart-2-line" style="color: #0ea5e9; margin-right: 4px;"></i>店员端展示
+                                </p>
+                                <div class="preview-card" id="staffPreview">
+                                    <h4 id="previewStaffName">慢病用药个账支付专属权益</h4>
+                                    <div class="hint" id="previewStaffHint">使用医保个人账户支付，立享专属优惠</div>
+                                    <div style="margin-top: 10px; font-size: 12px; opacity: 0.9; position: relative; z-index: 1;">
+                                        <i class="ri-information-line"></i> 
+                                        <span id="previewStaffTip">您好，您的医保个人账户可以支付本次费用，还能享受专属优惠哦~</span>
+                                    </div>
+                                    <div class="badge">个账支付专用</div>
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div>
+                                <p style="font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 10px;">
+                                    <i class="ri-alert-line" style="color: #f59e0b; margin-right: 4px;"></i>排除商品提示
+                                </p>
+                                <div style="background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 12px;">
+                                    <p style="font-size: 13px; color: #92400e;" id="previewExclude">保健品、医疗器械、消杀类商品不参与本活动</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">
+                                <i class="ri-list-check"></i>
+                                医保合规自检
+                            </div>
+                            <div class="check-item pass">
+                                <i class="ri-checkbox-circle-fill check-icon pass"></i>
+                                <div class="check-content">
+                                    <div class="check-title">权益名称合规</div>
+                                    <div class="check-desc">未使用违规宣传用语</div>
+                                </div>
+                            </div>
+                            <div class="check-item pass">
+                                <i class="ri-checkbox-circle-fill check-icon pass"></i>
+                                <div class="check-content">
+                                    <div class="check-title">排除说明完整</div>
+                                    <div class="check-desc">已明确非医保商品范围</div>
+                                </div>
+                            </div>
+                            <div class="check-item warn">
+                                <i class="ri-error-warning-fill check-icon warn"></i>
+                                <div class="check-content">
+                                    <div class="check-title">商品范围待确认</div>
+                                    <div class="check-desc">建议关联具体药品类目，发布前可在门店发布页做详细检查</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button class="btn btn-secondary" onclick="saveDraft()">
+                                <i class="ri-save-line"></i>保存草稿
+                            </button>
+                            <button class="btn btn-primary" onclick="goToStorePublish()">
+                                <i class="ri-arrow-right-line"></i>下一步：选择门店
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="benefit-list" class="tab-content" style="display: none;">
+                <div class="card">
+                    <div class="filter-bar">
+                        <div class="filter-item">
+                            <label>权益状态：</label>
+                            <select class="form-select" style="width: 140px;">
+                                <option value="">全部</option>
+                                <option value="active">进行中</option>
+                                <option value="draft">草稿</option>
+                                <option value="ended">已结束</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>会员分层：</label>
+                            <select class="form-select" style="width: 140px;">
+                                <option value="">全部分层</option>
+                                <option>慢病会员</option>
+                                <option>家庭常备药</option>
+                                <option>银发关怀</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <input type="text" class="form-input" style="width: 200px;" placeholder="搜索权益名称...">
+                        </div>
+                        <button class="btn btn-primary" style="margin-left: auto;" onclick="switchTab('benefit', 'create')">
+                            <i class="ri-add-line"></i>新建权益
+                        </button>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>权益名称</th>
+                                <th>会员分层</th>
+                                <th>权益类型</th>
+                                <th>面额</th>
+                                <th>生效时间</th>
+                                <th>适用门店</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 500;">慢病用药个账支付专属权益</td>
+                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">慢病会员</span></td>
+                                <td>立减券</td>
+                                <td style="color: #ef4444; font-weight: 500;">¥20</td>
+                                <td>2026.06.01 - 2026.08.31</td>
+                                <td>128家</td>
+                                <td><span class="status-badge active">进行中</span></td>
+                                <td>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">查看</a>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">编辑</a>
+                                    <a style="color: #ef4444; cursor: pointer;">下架</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">银发关怀个账9折优惠</td>
+                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">银发关怀</span></td>
+                                <td>折扣</td>
+                                <td style="color: #ef4444; font-weight: 500;">9折</td>
+                                <td>2026.05.15 - 2026.07.15</td>
+                                <td>86家</td>
+                                <td><span class="status-badge active">进行中</span></td>
+                                <td>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">查看</a>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">编辑</a>
+                                    <a style="color: #ef4444; cursor: pointer;">下架</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">家庭常备药个账立减券</td>
+                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">家庭常备药</span></td>
+                                <td>立减券</td>
+                                <td style="color: #ef4444; font-weight: 500;">¥15</td>
+                                <td>2026.06.10 - 2026.09.10</td>
+                                <td>215家</td>
+                                <td><span class="status-badge active">进行中</span></td>
+                                <td>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">查看</a>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">编辑</a>
+                                    <a style="color: #ef4444; cursor: pointer;">下架</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">孕产妈妈个账多倍积分</td>
+                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">孕产妈妈</span></td>
+                                <td>多倍积分</td>
+                                <td style="color: #ef4444; font-weight: 500;">3倍积分</td>
+                                <td>2026.07.01 - 2026.12.31</td>
+                                <td>0家</td>
+                                <td><span class="status-badge draft">草稿</span></td>
+                                <td>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">编辑</a>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">发布</a>
+                                    <a style="color: #ef4444; cursor: pointer;">删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500;">春节个账支付特惠</td>
+                                <td><span class="tag-item selected" style="font-size: 11px; padding: 3px 10px;">全部分层</span></td>
+                                <td>立减券</td>
+                                <td style="color: #ef4444; font-weight: 500;">¥30</td>
+                                <td>2026.01.15 - 2026.02.28</td>
+                                <td>320家</td>
+                                <td><span class="status-badge ended">已结束</span></td>
+                                <td>
+                                    <a style="color: #0ea5e9; cursor: pointer; margin-right: 10px;">查看数据</a>
+                                    <a style="color: #0ea5e9; cursor: pointer;">复制</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                        <span style="font-size: 13px; color: #6b7280;">共 5 条记录</span>
+                        <div style="display: flex; gap: 6px;">
+                            <button class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">上一页</button>
+                            <button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">1</button>
+                            <button class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">下一页</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-store" class="page-section">
+            <div class="page-header">
+                <h1 class="page-title">门店发布</h1>
+                <p class="page-desc">选择权益适用门店范围，进行医保政策合规检查后发布</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <i class="ri-gift-2-line"></i>
+                    当前权益
+                </div>
+                <div style="display: flex; align-items: center; gap: 20px; padding: 16px; background: #f0f9ff; border-radius: 8px;">
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 16px; font-weight: 600; color: #0c4a6e; margin-bottom: 4px;">慢病用药个账支付专属权益</h3>
+                        <p style="font-size: 13px; color: #0369a1;">
+                            <i class="ri-calendar-line"></i> 2026.06.23 - 2026.09.30
+                            <span style="margin: 0 10px;">|</span>
+                            <i class="ri-user-heart-line"></i> 慢病会员
+                            <span style="margin: 0 10px;">|</span>
+                            <i class="ri-coupon-line"></i> 满99减20
+                        </p>
+                    </div>
+                    <button class="btn btn-outline" onclick="switchPage('benefit')">
+                        <i class="ri-edit-line"></i>修改权益
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="ri-map-pin-line"></i>
+                            门店范围选择
+                        </div>
+                        
+                        <div class="filter-bar">
+                            <div class="filter-item">
+                                <select class="form-select" style="width: 120px;" id="selectCity" onchange="filterStores()">
+                                    <option value="">全部城市</option>
+                                    <option value="beijing">北京市</option>
+                                    <option value="shanghai">上海市</option>
+                                    <option value="guangzhou">广州市</option>
+                                    <option value="shenzhen">深圳市</option>
+                                    <option value="hangzhou">杭州市</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <select class="form-select" style="width: 140px;" id="selectPolicy" onchange="filterStores()">
+                                    <option value="">医保政策</option>
+                                    <option value="support">支持个账支付</option>
+                                    <option value="partial">部分支持</option>
+                                    <option value="nosupport">暂不支持</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <input type="text" class="form-input" style="width: 180px;" placeholder="搜索门店名称..." id="searchStore" onkeyup="filterStores()">
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                            <button class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;" onclick="selectAllStores()">全选</button>
+                            <button class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;" onclick="clearAllStores()">清空</button>
+                            <span style="font-size: 13px; color: #6b7280; line-height: 32px; margin-left: auto;">
+                                已选择 <span id="selectedCount" style="color: #0ea5e9; font-weight: 500;">3</span> 家门店
+                            </span>
+                        </div>
+
+                        <div style="max-height: 400px; overflow-y: auto;" id="storeList">
+                            <div class="store-item selected" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox" checked>
+                                    <div>
+                                        <div class="store-name">北京朝阳路店</div>
+                                        <div class="store-addr">北京市朝阳区朝阳路168号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item selected" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox" checked>
+                                    <div>
+                                        <div class="store-name">北京海淀中关村店</div>
+                                        <div class="store-addr">北京市海淀区中关村大街25号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item selected" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox" checked>
+                                    <div>
+                                        <div class="store-name">北京西城区宣武门店</div>
+                                        <div class="store-addr">北京市西城区宣武门东大街12号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">上海南京路店</div>
+                                        <div class="store-addr">上海市黄浦区南京东路88号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">上海浦东陆家嘴店</div>
+                                        <div class="store-addr">上海市浦东新区陆家嘴环路100号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">广州天河城店</div>
+                                        <div class="store-addr">广州市天河区天河路208号 · 部分支持</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">深圳南山科技园店</div>
+                                        <div class="store-addr">深圳市南山区科技园路15号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                            <div class="store-item" onclick="toggleStore(this)">
+                                <div class="store-info">
+                                    <input type="checkbox" class="checkbox">
+                                    <div>
+                                        <div class="store-name">杭州西湖银泰店</div>
+                                        <div class="store-addr">杭州市西湖区延安路98号 · 支持个账支付</div>
+                                    </div>
+                                </div>
+                                <span class="status-badge active">正常营业</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="ri-shield-check-line"></i>
+                            医保合规检查
+                        </div>
+                        <p style="font-size: 13px; color: #6b7280; margin-bottom: 16px;">发布前检查，确保权益符合当地医保政策要求</p>
+
+                        <div class="filter-bar" style="margin-bottom: 16px;">
+                            <div class="filter-item">
+                                <label>检查维度：</label>
+                                <select class="form-select" style="width: 140px;" id="checkDimension">
+                                    <option value="all">全部检查</option>
+                                    <option value="city">按城市</option>
+                                    <option value="policy">按医保政策口径</option>
+                                    <option value="level">按会员等级</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="runComplianceCheck()">
+                                <i class="ri-refresh-line"></i>开始检查
+                            </button>
+                        </div>
+
+                        <div id="checkResults">
+                            <div class="check-item pass">
+                                <i class="ri-checkbox-circle-fill check-icon pass"></i>
+                                <div class="check-content">
+                                    <div class="check-title">北京市 · 医保政策口径</div>
+                                    <div class="check-desc">慢病用药个账支付符合北京医保政策，3家门店均支持</div>
+                                </div>
+                            </div>
+                            <div class="check-item pass">
+                                <i class="ri-checkbox-circle-fill check-icon pass"></i>
+                                <div class="check-content">
+                                    <div class="check-title">会员等级匹配</div>
+                                    <div class="check-desc">慢病会员分层共12,580人，符合权益投放范围</div>
+                                </div>
+                            </div>
+                            <div class="check-item warn">
+                                <i class="ri-error-warning-fill check-icon warn"></i>
+                                <div class="check-content">
+                                    <div class="check-title">广州市 · 部分门店待确认</div>
+                                    <div class="check-desc">广州地区医保政策对个账支付有特殊限制，建议核实后发布</div>
+                                </div>
+                            </div>
+                            <div class="check-item warn">
+                                <i class="ri-error-warning-fill check-icon warn"></i>
+                                <div class="check-content">
+                                    <div class="check-title">商品类目合规提醒</div>
+                                    <div class="check-desc">建议进一步确认权益关联的具体药品是否在医保目录内</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 16px; padding: 12px; background: #f0f9ff; border-radius: 6px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 13px; color: #0369a1; margin-bottom: 8px;">
+                                <span>整体合规进度</span>
+                                <span>2项通过 / 2项待确认</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="ri-settings-3-line"></i>
+                            发布设置
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <label class="form-label">发布方式</label>
+                            <div style="display: flex; gap: 12px;">
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                    <input type="radio" name="publishType" checked> 立即发布
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                    <input type="radio" name="publishType"> 定时发布
+                                </label>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <label class="form-label">店员通知</label>
+                            <div style="display: flex; gap: 12px;">
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                    <input type="checkbox" checked> 系统消息
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                    <input type="checkbox" checked> 短信通知
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                    <input type="checkbox"> 邮件通知
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">会员触达</label>
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                    <input type="checkbox" checked> 小程序推送
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                    <input type="checkbox"> 短信通知
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                    <input type="checkbox"> 公众号推送
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                        <button class="btn btn-secondary" onclick="saveStoreDraft()">
+                            <i class="ri-save-line"></i>保存设置
+                        </button>
+                        <button class="btn btn-success" onclick="publishBenefit()">
+                            <i class="ri-send-plane-line"></i>确认发布
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-dashboard" class="page-section">
+            <div class="page-header">
+                <h1 class="page-title">效果看板</h1>
+                <p class="page-desc">查看权益活动效果数据，评估个账支付权益对复购的带动作用</p>
+            </div>
+
+            <div class="card">
+                <div class="filter-bar">
+                    <div class="filter-item">
+                        <label>选择权益：</label>
+                        <select class="form-select" style="width: 240px;" id="dashboardBenefit" onchange="updateDashboard()">
+                            <option value="all">全部权益汇总</option>
+                            <option value="chronic" selected>慢病用药个账支付专属权益</option>
+                            <option value="silver">银发关怀个账9折优惠</option>
+                            <option value="family">家庭常备药个账立减券</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>时间范围：</label>
+                        <select class="form-select" style="width: 140px;" id="timeRange" onchange="updateDashboard()">
+                            <option value="7">近7天</option>
+                            <option value="30" selected>近30天</option>
+                            <option value="90">近90天</option>
+                            <option value="custom">自定义</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>门店范围：</label>
+                        <select class="form-select" style="width: 140px;">
+                            <option value="all">全部门店</option>
+                            <option>北京区域</option>
+                            <option>上海区域</option>
+                            <option>广州区域</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline" style="margin-left: auto;">
+                        <i class="ri-download-line"></i>导出数据
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-4" style="margin-bottom: 20px;">
+                <div class="stat-card">
+                    <div class="stat-value">12,580</div>
+                    <div class="stat-label">权益领取人数</div>
+                    <div class="stat-trend up">
+                        <i class="ri-arrow-up-line"></i>较上期增长 23.5%
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">8,942</div>
+                    <div class="stat-label">到店核销人次</div>
+                    <div class="stat-trend up">
+                        <i class="ri-arrow-up-line"></i>核销率 71.1%
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #0ea5e9;">68.7%</div>
+                    <div class="stat-label">个账支付占比</div>
+                    <div class="stat-trend up">
+                        <i class="ri-arrow-up-line"></i>较活动前提升 15.2%
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #10b981;">¥168.5</div>
+                    <div class="stat-label">平均客单价</div>
+                    <div class="stat-trend up">
+                        <i class="ri-arrow-up-line"></i>较活动前提升 18.3%
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-bottom: 20px;">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="ri-line-chart-line"></i>
+                        领取与核销趋势
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">
+                        <i class="ri-pie-chart-line"></i>
+                        支付方式分布
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="payChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-bottom: 20px;">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="ri-shopping-bag-line"></i>
+                        客单价变化对比
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="orderChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">
+                        <i class="ri-store-2-line"></i>
+                        门店核销排行 TOP5
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <div style="display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                            <span style="width: 24px; height: 24px; background: #fbbf24; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; margin-right: 12px;">1</span>
+                            <div style="flex: 1;">
+                                <div style="font-size: 14px; font-weight: 500;">北京朝阳路店</div>
+                                <div style="font-size: 12px; color: #6b7280;">核销 1,256 人次</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 14px; font-weight: 600; color: #0ea5e9;">72.3%</div>
+                                <div style="font-size: 11px; color: #6b7280;">个账占比</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                            <span style="width: 24px; height: 24px; background: #9ca3af; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; margin-right: 12px;">2</span>
+                            <div style="flex: 1;">
+                                <div style="font-size: 14px; font-weight: 500;">上海南京路店</div>
+                                <div style="font-size: 12px; color: #6b7280;">核销 1,089 人次</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 14px; font-weight: 600; color: #0ea5e9;">75.1%</div>
+                                <div style="font-size: 11px; color: #6b7280;">个账占比</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                            <span style="width: 24px; height: 24px; background: #cd7c2f; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; margin-right: 12px;">3</span>
+                            <div style="flex: 1;">
+                                <div style="font-size: 14px; font-weight: 500;">北京海淀中关村店</div>
+                                <div style="font-size: 12px; color: #6b7280;">核销 967 人次</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 14px; font-weight: 600; color: #0ea5e9;">70.8%</div>
+                                <div style="font-size: 11px; color: #6b7280;">个账占比</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                            <span style="width: 24px; height: 24px; background: #e5e7eb; color: #6b7280; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; margin-right: 12px;">4</span>
+                            <div style="flex: 1;">
+                                <div style="font-size: 14px; font-weight: 500;">深圳南山科技园店</div>
+                                <div style="font-size: 12px; color: #6b7280;">核销 845 人次</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 14px; font-weight: 600; color: #0ea5e9;">65.2%</div>
+                                <div style="font-size: 11px; color: #6b7280;">个账占比</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 12px 0;">
+                            <span style="width: 24px; height: 24px; background: #e5e7eb; color: #6b7280; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; margin-right: 12px;">5</span>
+                            <div style="flex: 1;">
+                                <div style="font-size: 14px; font-weight: 500;">杭州西湖银泰店</div>
+                                <div style="font-size: 12px; color: #6b7280;">核销 723 人次</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 14px; font-weight: 600; color: #0ea5e9;">68.9%</div>
+                                <div style="font-size: 11px; color: #6b7280;">个账占比</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <i class="ri-repeat-2-line"></i>
+                    复购效果分析
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 16px;">分析权益活动对会员复购行为的带动效果</p>
+                
+                <div class="grid-3" style="margin-bottom: 20px;">
+                    <div style="padding: 16px; background: #f0fdf4; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: 700; color: #166534;">32.8%</div>
+                        <div style="font-size: 13px; color: #15803d; margin-top: 4px;">活动期复购率</div>
+                    </div>
+                    <div style="padding: 16px; background: #eff6ff; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: 700; color: #1e40af;">24.5%</div>
+                        <div style="font-size: 13px; color: #2563eb; margin-top: 4px;">活动前复购率</div>
+                    </div>
+                    <div style="padding: 16px; background: #fef3c7; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 24px; font-weight: 700; color: #92400e;">+8.3%</div>
+                        <div style="font-size: 13px; color: #b45309; margin-top: 4px;">复购率提升</div>
+                    </div>
+                </div>
+
+                <div class="chart-container" style="height: 240px;">
+                    <canvas id="repurchaseChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-title">
+                    <i class="ri-file-list-3-line"></i>
+                    权益效果明细表
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>权益名称</th>
+                            <th>会员分层</th>
+                            <th>领取人数</th>
+                            <th>核销人次</th>
+                            <th>核销率</th>
+                            <th>个账占比</th>
+                            <th>客单价</th>
+                            <th>复购率</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">慢病用药个账支付专属权益</td>
+                            <td>慢病会员</td>
+                            <td>12,580</td>
+                            <td>8,942</td>
+                            <td style="color: #10b981; font-weight: 500;">71.1%</td>
+                            <td style="color: #0ea5e9; font-weight: 500;">68.7%</td>
+                            <td>¥168.5</td>
+                            <td style="color: #10b981;">32.8%</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">银发关怀个账9折优惠</td>
+                            <td>银发关怀</td>
+                            <td>8,320</td>
+                            <td>5,876</td>
+                            <td style="color: #10b981; font-weight: 500;">70.6%</td>
+                            <td style="color: #0ea5e9; font-weight: 500;">72.3%</td>
+                            <td>¥152.8</td>
+                            <td style="color: #10b981;">28.5%</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">家庭常备药个账立减券</td>
+                            <td>家庭常备药</td>
+                            <td>15,680</td>
+                            <td>9,876</td>
+                            <td style="color: #10b981; font-weight: 500;">63.0%</td>
+                            <td style="color: #0ea5e9; font-weight: 500;">61.2%</td>
+                            <td>¥145.2</td>
+                            <td style="color: #10b981;">26.3%</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">孕产妈妈个账多倍积分</td>
+                            <td>孕产妈妈</td>
+                            <td>3,240</td>
+                            <td>2,156</td>
+                            <td style="color: #f59e0b; font-weight: 500;">66.5%</td>
+                            <td style="color: #0ea5e9; font-weight: 500;">54.8%</td>
+                            <td>¥185.6</td>
+                            <td style="color: #10b981;">31.2%</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">春节个账支付特惠</td>
+                            <td>全部分层</td>
+                            <td>28,960</td>
+                            <td>19,876</td>
+                            <td style="color: #10b981; font-weight: 500;">68.6%</td>
+                            <td style="color: #0ea5e9; font-weight: 500;">65.4%</td>
+                            <td>¥178.9</td>
+                            <td style="color: #10b981;">29.7%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchPage(page) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelector('.nav-item[data-page="' + page + '"]').classList.add('active');
+            
+            if (page === 'dashboard') {
+                setTimeout(initCharts, 100);
+            }
+        }
+
+        function switchTab(page, tab) {
+            const tabContainer = document.getElementById(page + '-' + tab).parentElement;
+            tabContainer.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            document.getElementById(page + '-' + tab).style.display = 'block';
+            
+            const tabNav = tabContainer.previousElementSibling;
+            if (tabNav && tabNav.classList.contains('tabs')) {
+                tabNav.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                tabNav.querySelector('.tab-item[data-tab="' + tab + '"]').classList.add('active');
+            }
+        }
+
+        function toggleTag(el, group) {
+            el.classList.toggle('selected');
+        }
+
+        function toggleStore(el) {
+            el.classList.toggle('selected');
+            const checkbox = el.querySelector('.checkbox');
+            checkbox.checked = el.classList.contains('selected');
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            const count = document.querySelectorAll('#storeList .store-item.selected').length;
+            document.getElementById('selectedCount').textContent = count;
+        }
+
+        function selectAllStores() {
+            document.querySelectorAll('#storeList .store-item').forEach(item => {
+                item.classList.add('selected');
+                item.querySelector('.checkbox').checked = true;
+            });
+            updateSelectedCount();
+        }
+
+        function clearAllStores() {
+            document.querySelectorAll('#storeList .store-item').forEach(item => {
+                item.classList.remove('selected');
+                item.querySelector('.checkbox').checked = false;
+            });
+            updateSelectedCount();
+        }
+
+        function filterStores() {
+            const city = document.getElementById('selectCity').value;
+            const policy = document.getElementById('selectPolicy').value;
+            const keyword = document.getElementById('searchStore').value.toLowerCase();
+            
+            document.querySelectorAll('#storeList .store-item').forEach(item => {
+                const name = item.querySelector('.store-name').textContent.toLowerCase();
+                const addr = item.querySelector('.store-addr').textContent;
+                
+                let show = true;
+                if (keyword && !name.includes(keyword)) show = false;
+                
+                item.style.display = show ? 'flex' : 'none';
+            });
+        }
+
+        function runComplianceCheck() {
+            const btn = event.target.closest('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="ri-loader-4-line" style="animation: spin 1s linear infinite;"></i>检查中...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('合规检查完成！2项通过，2项待确认，请查看检查结果。');
+            }, 1500);
+        }
+
+        function saveDraft() {
+            alert('草稿已保存！');
+        }
+
+        function saveStoreDraft() {
+            alert('门店设置已保存！');
+        }
+
+        function goToStorePublish() {
+            switchPage('store');
+        }
+
+        function publishBenefit() {
+            if (confirm('确认发布该权益？发布后将同步至所选门店和会员端。')) {
+                alert('权益发布成功！已通知相关门店和会员。');
+            }
+        }
+
+        function updateDashboard() {
+            if (window.trendChart && window.payChart && window.orderChart && window.repurchaseChart) {
+                updateChartsData();
+            } else {
+                initCharts();
+            }
+        }
+
+        let trendChart, payChart, orderChart, repurchaseChart;
+
+        function initCharts() {
+            const trendCtx = document.getElementById('trendChart');
+            if (trendCtx && !trendChart) {
+                trendChart = new Chart(trendCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['第1天', '第3天', '第5天', '第7天', '第10天', '第15天', '第20天', '第25天', '第30天'],
+                        datasets: [
+                            {
+                                label: '领取人数',
+                                data: [520, 1280, 2450, 3680, 5240, 7680, 9870, 11250, 12580],
+                                borderColor: '#0ea5e9',
+                                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: '核销人次',
+                                data: [180, 620, 1350, 2180, 3240, 5180, 6870, 7850, 8942],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: '#f3f4f6' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            const payCtx = document.getElementById('payChart');
+            if (payCtx && !payChart) {
+                payChart = new Chart(payCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['医保个账支付', '微信支付', '支付宝', '现金', '其他'],
+                        datasets: [{
+                            data: [68.7, 18.5, 8.2, 3.1, 1.5],
+                            backgroundColor: ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#6b7280']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'right' } }
+                    }
+                });
+            }
+
+            const orderCtx = document.getElementById('orderChart');
+            if (orderCtx && !orderChart) {
+                orderChart = new Chart(orderCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['第1周', '第2周', '第3周', '第4周'],
+                        datasets: [
+                            {
+                                label: '活动前客单价',
+                                data: [142, 138, 145, 140],
+                                backgroundColor: '#94a3b8'
+                            },
+                            {
+                                label: '活动期客单价',
+                                data: [158, 165, 172, 168],
+                                backgroundColor: '#0ea5e9'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } },
+                        scales: {
+                            y: { beginAtZero: false, min: 100, grid: { color: '#f3f4f6' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            const repurchaseCtx = document.getElementById('repurchaseChart');
+            if (repurchaseCtx && !repurchaseChart) {
+                repurchaseChart = new Chart(repurchaseCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周', '第7周', '第8周'],
+                        datasets: [
+                            {
+                                label: '活动期复购率',
+                                data: [26.5, 28.2, 30.1, 31.5, 32.8, 33.2, 32.5, 32.8],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: '活动前同期复购率',
+                                data: [22.3, 23.1, 23.8, 24.2, 24.5, 24.8, 24.3, 24.5],
+                                borderColor: '#94a3b8',
+                                backgroundColor: 'rgba(148, 163, 184, 0.1)',
+                                fill: true,
+                                tension: 0.4,
+                                borderDash: [5, 5]
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } },
+                        scales: {
+                            y: { beginAtZero: false, min: 20, max: 40, grid: { color: '#f3f4f6' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateChartsData() {
+            const benefit = document.getElementById('dashboardBenefit').value;
+            const dataMap = {
+                'all': {
+                    receive: [1200, 3200, 5800, 8500, 12000, 18500, 24000, 28000, 30520],
+                    use: [520, 1680, 3250, 5180, 7640, 12180, 16870, 19850, 22562],
+                    pay: [65.2, 20.5, 9.2, 3.5, 1.6],
+                    orderBefore: [138, 135, 142, 139],
+                    orderAfter: [155, 162, 168, 165]
+                },
+                'chronic': {
+                    receive: [520, 1280, 2450, 3680, 5240, 7680, 9870, 11250, 12580],
+                    use: [180, 620, 1350, 2180, 3240, 5180, 6870, 7850, 8942],
+                    pay: [68.7, 18.5, 8.2, 3.1, 1.5],
+                    orderBefore: [142, 138, 145, 140],
+                    orderAfter: [158, 165, 172, 168]
+                },
+                'silver': {
+                    receive: [320, 780, 1520, 2380, 3540, 5280, 6870, 7650, 8320],
+                    use: [120, 420, 950, 1580, 2340, 3780, 4870, 5450, 5876],
+                    pay: [72.3, 16.2, 7.5, 2.8, 1.2],
+                    orderBefore: [128, 125, 132, 130],
+                    orderAfter: [145, 152, 158, 155]
+                },
+                'family': {
+                    receive: [680, 1680, 3150, 4780, 6840, 9680, 12570, 14250, 15680],
+                    use: [280, 920, 2050, 3280, 4840, 6480, 8270, 9150, 9876],
+                    pay: [61.2, 22.8, 10.2, 3.8, 2.0],
+                    orderBefore: [125, 122, 128, 126],
+                    orderAfter: [138, 145, 152, 148]
+                }
+            };
+
+            const data = dataMap[benefit] || dataMap['chronic'];
+
+            if (trendChart) {
+                trendChart.data.datasets[0].data = data.receive;
+                trendChart.data.datasets[1].data = data.use;
+                trendChart.update();
+            }
+            if (payChart) {
+                payChart.data.datasets[0].data = data.pay;
+                payChart.update();
+            }
+            if (orderChart) {
+                orderChart.data.datasets[0].data = data.orderBefore;
+                orderChart.data.datasets[1].data = data.orderAfter;
+                orderChart.update();
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = ['benefitName', 'benefitValue', 'benefitUnit', 'payHint', 'excludeDesc', 'staffTip', 'useThreshold'];
+            inputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', updatePreview);
+                    el.addEventListener('change', updatePreview);
+                }
+            });
+        });
+
+        function updatePreview() {
+            const name = document.getElementById('benefitName').value;
+            const value = document.getElementById('benefitValue').value;
+            const unit = document.getElementById('benefitUnit').value;
+            const hint = document.getElementById('payHint').value;
+            const exclude = document.getElementById('excludeDesc').value;
+            const tip = document.getElementById('staffTip').value;
+            const threshold = document.getElementById('useThreshold').value;
+
+            document.getElementById('previewMemberName').textContent = name;
+            document.getElementById('previewStaffName').textContent = name;
+
+            document.getElementById('previewMemberValue').textContent = value;
+            const unitText = { 'yuan': '立减券', 'percent': '%折扣', 'points': '积分' }[unit];
+            document.getElementById('previewMemberUnit').textContent = unitText;
+
+            document.getElementById('previewMemberHint').textContent = hint;
+            document.getElementById('previewStaffHint').textContent = hint;
+
+            document.getElementById('previewExclude').textContent = exclude;
+            document.getElementById('previewStaffTip').textContent = tip;
+
+            document.getElementById('previewMemberThreshold').textContent = threshold || '无门槛';
+        }
+    </script>
+</body>
+</html>
